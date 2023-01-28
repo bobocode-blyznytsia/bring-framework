@@ -30,7 +30,7 @@ public interface BeanDefinitionRegistry {
    * Retrieve all registered {@link BeanDefinition}s.
    *
    * @return a map of all registered bean definitions, with bean name as key and
-   * {@link BeanDefinition} as value
+   *     {@link BeanDefinition} as value
    */
   Map<String, BeanDefinition> getAllBeanDefinitions();
 }
