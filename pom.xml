@@ -41,20 +41,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.8</version>
-                <configuration>
-                    <excludes>
-                        <exclude>com.bringframework.exceptions/**</exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 
     <build>
         <plugins>
@@ -76,6 +62,11 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>com.bringframework.exceptions/**</exclude>
+                    </excludes>
+                </configuration>
 
             </plugin>
             <plugin>
