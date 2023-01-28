@@ -62,6 +62,11 @@
                         </goals>
                     </execution>
                 </executions>
+                <configuration>
+                    <excludes>
+                        <exclude>com/bringframework/exceptions/*</exclude>
+                    </excludes>
+                </configuration>
 
             </plugin>
             <plugin>
