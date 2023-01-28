@@ -9,7 +9,7 @@ import com.bringframework.registry.BeanDefinition;
 public interface BeanPostProcessor {
 
   /**
-   * Perform operations on the given bean instance before and after initialization.
+   * Performs operations on the given bean instance before and after initialization.
    */
   void process();
 }

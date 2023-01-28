@@ -4,7 +4,7 @@ import com.bringframework.registry.BeanDefinition;
 import java.util.Collection;
 
 /**
- * Interface for a factory that should create and manage beans.
+ * Interface for a factory that creates and manages beans.
  */
 public interface BeanFactory {
 

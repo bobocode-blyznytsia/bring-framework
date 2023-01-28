@@ -22,7 +22,7 @@ public interface BeanDefinitionRegistry {
    * Retrieve the {@link BeanDefinition} for the given bean name.
    *
    * @param name the name of the bean definition
-   * @return the {@link BeanDefinition} for the given name or {@code null} if none is found
+   * @return the {@link BeanDefinition} for the given name.
    */
   BeanDefinition getBeanDefinition(String name);
 
