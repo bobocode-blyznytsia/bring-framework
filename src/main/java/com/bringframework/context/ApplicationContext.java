@@ -5,8 +5,9 @@ import com.bringframework.exceptions.NoUniqueBeanException;
 import java.util.Map;
 
 /**
- * Interface for an Inversion of Control (IoC) container context. An IoC container is responsible for instantiating,
- * configuring, and assembling objects known as beans, as well as managing their lifecycle.
+ * Interface for an Inversion of Control (IoC) container context. An IoC container is responsible
+ * for instantiating, configuring, and assembling objects known as beans, as well as managing their
+ * lifecycle.
  */
 public interface ApplicationContext {
 

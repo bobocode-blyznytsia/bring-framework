@@ -11,7 +11,8 @@ public interface BeanFactory {
   /**
    * Creates and initializes beans from a collection of {@link BeanDefinition}s.
    *
-   * @param beanDefinitions the collection of {@link BeanDefinition}s to create and initialize beans from
+   * @param beanDefinitions the collection of {@link BeanDefinition}s to create and initialize beans
+   *                        from
    */
   void createBeans(Collection<BeanDefinition> beanDefinitions);
 }

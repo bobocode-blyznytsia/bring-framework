@@ -5,8 +5,8 @@ import java.util.Map;
 
 /**
  * Interface for a registry that holds {@link BeanDefinition}.
- * <p>
- * This is used by the {@link ApplicationContext} to create and manage bean instances.
+ *
+ * <p>This is used by the {@link ApplicationContext} to create and manage bean instances.
  **/
 public interface BeanDefinitionRegistry {
 
@@ -29,7 +29,8 @@ public interface BeanDefinitionRegistry {
   /**
    * Retrieve all registered {@link BeanDefinition}s.
    *
-   * @return a map of all registered bean definitions, with bean name as key and {@link BeanDefinition} as value
+   * @return a map of all registered bean definitions, with bean name as key and
+   * {@link BeanDefinition} as value
    */
   Map<String, BeanDefinition> getAllBeanDefinitions();
 }
