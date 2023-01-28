@@ -64,7 +64,7 @@
                 </executions>
                 <configuration>
                     <excludes>
-                        <exclude>com.bringframework.exceptions/**</exclude>
+                        <exclude>com/bringframework/exceptions/*</exclude>
                     </excludes>
                 </configuration>
 
