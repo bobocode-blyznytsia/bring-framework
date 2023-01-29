@@ -1,5 +1,6 @@
 package com.bringframework.registry;
 
+import java.lang.reflect.Field;
 import java.util.Map;
 
 /**
@@ -14,7 +15,7 @@ public interface BeanDefinition {
    *
    * @return the bean class
    */
-  <T> Class<T> getBeanClass();
+  Class<?> getBeanClass();
 
   /**
    * Returns a map of autowired fields and their respective class metadata for the bean. The keys in
@@ -22,5 +23,5 @@ public interface BeanDefinition {
    *
    * @return a map of autowired fields and their class metadata
    */
-  <T> Map<String, Class<T>> getAutowiredFieldsClassMetadata();
+  Map<String, Field> getAutowiredFieldsMetadata();
 }
