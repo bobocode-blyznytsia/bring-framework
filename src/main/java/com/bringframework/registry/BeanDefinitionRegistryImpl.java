@@ -20,8 +20,8 @@ public class BeanDefinitionRegistryImpl implements BeanDefinitionRegistry {
   @Override
   public void registerBeanDefinition(String name, BeanDefinition beanDefinition) {
     if (registry.containsKey(name)) {
-      log.error("BeanDefinition with name {} already exists. Registry BeanDefinition class is {} " +
-              "and provided for creation is {}", name, registry.get(name).getBeanClass(),
+      log.error("BeanDefinition with name {} already exists. Registry BeanDefinition class is {} "
+              + "and provided for creation is {}", name, registry.get(name).getBeanClass(),
           beanDefinition.getBeanClass());
       throw new BeanDefinitionDuplicateNameException(
           "BeanDefinition with name " + name + " already exists");
@@ -41,7 +41,8 @@ public class BeanDefinitionRegistryImpl implements BeanDefinitionRegistry {
 
   /**
    * {@inheritDoc}
-   * <p> Returns a defensive copy of all the bean definitions stored in the registry.
+   *
+   * <p>Returns a defensive copy of all the bean definitions stored in the registry.
    */
   @Override
   public Map<String, BeanDefinition> getAllBeanDefinitions() {
