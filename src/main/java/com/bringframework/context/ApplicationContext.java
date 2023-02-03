@@ -18,7 +18,7 @@ public interface ApplicationContext {
    * @param <T>      the generic type of the bean
    * @return the bean of the specified type
    */
-  <T> T getBean(Class<T> beanType);
+  <T> T getBean(Class<T> beanType) throws NoSuchBeanException, NoUniqueBeanException;
 
   /**
    * Retrieves a bean with the specified name and type from the container.
@@ -28,7 +28,7 @@ public interface ApplicationContext {
    * @param <T>      the generic type of the bean
    * @return the bean with the specified name and type
    */
-  <T> T getBean(String name, Class<T> beanType);
+  <T> T getBean(String name, Class<T> beanType) throws NoSuchBeanException;
 
   /**
    * Retrieves a map of all beans of the specified type from the container.
