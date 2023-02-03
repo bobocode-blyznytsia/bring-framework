@@ -8,4 +8,9 @@ public class BringException extends RuntimeException {
     public BringException(String message) {
         super(message);
     }
+
+    public BringException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
 }
