@@ -13,6 +13,7 @@ import com.bringframework.registry.BeanDefinitionImpl;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import java.lang.reflect.Field;
 import java.util.Arrays;
+import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 
 /**
@@ -21,6 +22,7 @@ import org.reflections.Reflections;
  * in a {@link BeanDefinitionRegistry}. By default, it looks for classes annotated
  * with {@link Component} annotation.
  */
+@Slf4j
 public class DefaultBeanDefinitionReader implements BeanDefinitionReader {
 
   protected BeanDefinitionRegistry registry;
@@ -36,6 +38,7 @@ public class DefaultBeanDefinitionReader implements BeanDefinitionReader {
   public void registerBeans(String packageName) {
     var reflections = new Reflections(packageName);
     var beanClasses = reflections.getTypesAnnotatedWith(Component.class);
+    log.debug("found {} classes annotated with @Component", beanClasses.size());
     beanClasses.parallelStream().forEach(this::registerBean);
   }
 
@@ -43,6 +46,7 @@ public class DefaultBeanDefinitionReader implements BeanDefinitionReader {
     var beanName = resolveBeanName(beanClass);
     var beanDefinition = createBeanDefinition(beanClass);
     registry.registerBeanDefinition(beanName, beanDefinition);
+    log.debug("bean {} registered in beanDefinitionRegistry", beanName);
   }
 
   private String resolveBeanName(Class<?> beanClass) {
@@ -56,6 +60,7 @@ public class DefaultBeanDefinitionReader implements BeanDefinitionReader {
         Arrays.stream(declaredFields)
             .filter(field -> nonNull(field.getAnnotation(Autowired.class)))
             .collect(toMap(Field::getName, identity()));
+    log.debug("found {} autowired fields for bean {}", autowiredFieldsMap.size(), resolveBeanName(beanClass));
     return BeanDefinitionImpl
         .builder()
         .clazz(beanClass)
