@@ -5,8 +5,8 @@ package com.bringframework.exceptions;
  */
 public class NoSuchBeanException extends BringException {
 
-    public NoSuchBeanException(String message) {
-        super(message);
-    }
+  public NoSuchBeanException(String message) {
+    super(message);
+  }
 
 }

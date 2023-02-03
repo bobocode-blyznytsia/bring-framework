@@ -5,9 +5,9 @@ package com.bringframework.exceptions;
  */
 public class NoUniqueBeanException extends BringException {
 
-    public NoUniqueBeanException(Class<?> beanType) {
-        super(String.format(""" 
-                     There are several beans with type %s, to get bean use method with bean name parameter:
-                        getBean(String name, Class<T> beanType)""", beanType.getSimpleName()));
-    }
+  public NoUniqueBeanException(Class<?> beanType) {
+    super(String.format(""" 
+        There are several beans with type %s, to get bean use method with bean name parameter:
+           getBean(String name, Class<T> beanType)""", beanType.getSimpleName()));
+  }
 }
