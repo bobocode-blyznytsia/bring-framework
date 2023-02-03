@@ -13,7 +13,6 @@ import com.bringframework.registry.BeanDefinitionImpl;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import java.lang.reflect.Field;
 import java.util.Arrays;
-import lombok.SneakyThrows;
 import org.reflections.Reflections;
 
 /**
@@ -34,16 +33,16 @@ public class DefaultBeanDefinitionReader implements BeanDefinitionReader {
    * {@inheritDoc}
    */
   @Override
-  @SneakyThrows
   public void registerBeans(String packageName) {
     var reflections = new Reflections(packageName);
     var beanClasses = reflections.getTypesAnnotatedWith(Component.class);
-    var definitionsMap =
-        beanClasses
-            .stream()
-            .collect(toMap(this::resolveBeanName, this::createBeanDefinition));
+    beanClasses.parallelStream().forEach(this::registerBean);
+  }
 
-    definitionsMap.forEach((key, value) -> registry.registerBeanDefinition(key, value));
+  private void registerBean(Class<?> beanClass) {
+    var beanName = resolveBeanName(beanClass);
+    var beanDefinition = createBeanDefinition(beanClass);
+    registry.registerBeanDefinition(beanName, beanDefinition);
   }
 
   private String resolveBeanName(Class<?> beanClass) {
@@ -53,14 +52,14 @@ public class DefaultBeanDefinitionReader implements BeanDefinitionReader {
 
   private BeanDefinition createBeanDefinition(Class<?> beanClass) {
     Field[] declaredFields = beanClass.getDeclaredFields();
-    var autowiredFields =
+    var autowiredFieldsMap =
         Arrays.stream(declaredFields)
             .filter(field -> nonNull(field.getAnnotation(Autowired.class)))
             .collect(toMap(Field::getName, identity()));
     return BeanDefinitionImpl
         .builder()
         .clazz(beanClass)
-        .autowiredFieldsMetadata(autowiredFields)
+        .autowiredFieldsMetadata(autowiredFieldsMap)
         .build();
   }
 }

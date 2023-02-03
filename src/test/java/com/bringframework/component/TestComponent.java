@@ -2,12 +2,13 @@ package com.bringframework.component;
 
 import com.bringframework.annotations.Autowired;
 import com.bringframework.annotations.Component;
-import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
-@Data
 @Component
+@RequiredArgsConstructor
 public class TestComponent {
 
   @Autowired
   private final TestService testService;
+
 }

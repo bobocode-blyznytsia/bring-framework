@@ -15,7 +15,7 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-public class DefaultBeanDefinitionReaderTest {
+ class DefaultBeanDefinitionReaderTest {
 
   @Mock
   private BeanDefinitionRegistry registry;
@@ -30,12 +30,12 @@ public class DefaultBeanDefinitionReaderTest {
   private DefaultBeanDefinitionReader underTest;
 
   @BeforeEach
-  public void setUp() {
+   void setUp() {
     openMocks(this);
   }
 
   @Test
-  public void shouldRegisterBeans() {
+   void shouldRegisterBeans() {
     underTest.registerBeans("com.bringframework");
 
     verify(registry, times(1)).registerBeanDefinition(beanDefinitionNameArgumentCaptor.capture(),
@@ -44,7 +44,8 @@ public class DefaultBeanDefinitionReaderTest {
     var autowiredFields = beanDefinitionArgumentCaptor.getValue().getAutowiredFieldsMetadata();
     assertEquals("testComponent", beanDefinitionNameArgumentCaptor.getValue());
     assertEquals(1, autowiredFields.size());
-    assertTrue(autowiredFields.containsKey("testService"));
+    assertTrue( autowiredFields.containsKey("testService"));
   }
+
 
 }
