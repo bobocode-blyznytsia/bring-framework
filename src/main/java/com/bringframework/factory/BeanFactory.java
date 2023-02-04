@@ -1,7 +1,7 @@
 package com.bringframework.factory;
 
 import com.bringframework.registry.BeanDefinition;
-import java.util.Collection;
+import java.util.Map;
 
 /**
  * Interface for a factory that creates and manages beans.
@@ -11,8 +11,7 @@ public interface BeanFactory {
   /**
    * Creates and initializes beans from a collection of {@link BeanDefinition}s.
    *
-   * @param beanDefinitions the collection of {@link BeanDefinition}s to create and initialize beans
-   *                        from
+   * @return bean map, where key - bean name, and value - new instance of the bean
    */
-  void createBeans(Collection<BeanDefinition> beanDefinitions);
+  Map<String, Object> createBeans();
 }
