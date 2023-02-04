@@ -1,4 +1,4 @@
-package com.bringframework.component;
+package com.bringframework.reader;
 
 import com.bringframework.annotations.Autowired;
 import com.bringframework.annotations.Component;

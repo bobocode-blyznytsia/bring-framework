@@ -18,10 +18,10 @@ public interface BeanDefinition {
   Class<?> getBeanClass();
 
   /**
-   * Returns a map of autowired fields and their respective class metadata for the bean. The keys in
+   * Returns a map of autowired fields and their respective metadata for the bean. The keys in
    * the map are field names and the values are the corresponding class metadata.
    *
-   * @return a map of autowired fields and their class metadata
+   * @return a map of autowired fields and their metadata
    */
   Map<String, Field> getAutowiredFieldsMetadata();
 }

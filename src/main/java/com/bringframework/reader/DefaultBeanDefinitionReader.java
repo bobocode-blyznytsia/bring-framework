@@ -25,7 +25,7 @@ import org.reflections.Reflections;
 @Slf4j
 public class DefaultBeanDefinitionReader implements BeanDefinitionReader {
 
-  protected BeanDefinitionRegistry registry;
+  private final BeanDefinitionRegistry registry;
 
   public DefaultBeanDefinitionReader(BeanDefinitionRegistry registry) {
     this.registry = registry;
@@ -60,7 +60,8 @@ public class DefaultBeanDefinitionReader implements BeanDefinitionReader {
         Arrays.stream(declaredFields)
             .filter(field -> nonNull(field.getAnnotation(Autowired.class)))
             .collect(toMap(Field::getName, identity()));
-    log.debug("found {} autowired fields for bean {}", autowiredFieldsMap.size(), resolveBeanName(beanClass));
+    log.debug("found {} autowired fields for bean {}", autowiredFieldsMap.size(),
+        resolveBeanName(beanClass));
     return BeanDefinitionImpl
         .builder()
         .clazz(beanClass)
