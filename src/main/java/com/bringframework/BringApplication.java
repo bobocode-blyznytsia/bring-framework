@@ -2,19 +2,24 @@ package com.bringframework;
 
 import com.bringframework.context.AnnotationConfigApplicationContext;
 import com.bringframework.context.ApplicationContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+/**
+ * Entry point to work with Bring Application.
+ */
+@Slf4j
 public class BringApplication {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(BringApplication.class);
   private ApplicationContext applicationContext;
 
   public BringApplication() {
   }
 
+  /**
+   * Runs Bring Application and creates {@code ApplicationContext}.
+   */
   public void run() {
-    LOGGER.info("Starting Bring application...");
+    log.info("Starting Bring application...");
     applicationContext = createApplicationContext();
   }
 
@@ -22,6 +27,11 @@ public class BringApplication {
     return new AnnotationConfigApplicationContext();
   }
 
+  /**
+   * Returns created before application context.
+   *
+   * @return created application context
+   */
   public ApplicationContext getApplicationContext() {
     return applicationContext;
   }
