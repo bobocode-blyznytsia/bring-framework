@@ -21,8 +21,8 @@ public class DefaultBeanDefinitionRegistry implements BeanDefinitionRegistry {
   public void registerBeanDefinition(String name, BeanDefinition beanDefinition) {
     if (registry.containsKey(name)) {
       throw new BeanDefinitionDuplicateNameException(String.format(
-          "BeanDefinition with name %s already exists. Registry BeanDefinition class is %s and " +
-              "provided for creation is %s", name, registry.get(name).getBeanClass(),
+          "BeanDefinition with name %s already exists. Registry BeanDefinition class is %s and "
+              + "provided for creation is %s", name, registry.get(name).getBeanClass(),
           beanDefinition.getBeanClass()));
     }
     registry.put(name, beanDefinition);
