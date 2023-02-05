@@ -7,6 +7,7 @@ import java.lang.annotation.Annotation;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Default implementation of {@link DependencyResolver} interface
@@ -14,6 +15,8 @@ import java.util.Map;
  * <p>Provides basic bean dependency resolution capabilities.
  * Is not capable of resolving conflicts when multiple bean candidates are available
  */
+
+@Slf4j
 public class DefaultDependencyResolver implements DependencyResolver {
 
   private final Map<String, BeanDefinition> beanDefinitions;
@@ -33,6 +36,7 @@ public class DefaultDependencyResolver implements DependencyResolver {
    */
   @Override
   public String getCandidateNameOfType(Class<?> candidateType, Annotation... metadata) {
+    log.debug("Resolving a candidate of type {}", candidateType.getSimpleName());
     List<String> candidateNames = beanDefinitions.entrySet().stream()
         .filter(entry -> candidateType.isAssignableFrom(entry.getValue().getBeanClass()))
         .map(Map.Entry::getKey)
