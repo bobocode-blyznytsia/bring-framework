@@ -11,7 +11,7 @@ import lombok.extern.slf4j.Slf4j;
  * retrieve them. This implementation is thread-safe.
  */
 @Slf4j
-public class BeanDefinitionRegistryImpl implements BeanDefinitionRegistry {
+public class DefaultBeanDefinitionRegistry implements BeanDefinitionRegistry {
   private final Map<String, BeanDefinition> registry = new ConcurrentHashMap<>();
 
   /**
@@ -20,11 +20,10 @@ public class BeanDefinitionRegistryImpl implements BeanDefinitionRegistry {
   @Override
   public void registerBeanDefinition(String name, BeanDefinition beanDefinition) {
     if (registry.containsKey(name)) {
-      log.error("BeanDefinition with name {} already exists. Registry BeanDefinition class is {} "
-              + "and provided for creation is {}", name, registry.get(name).getBeanClass(),
-          beanDefinition.getBeanClass());
-      throw new BeanDefinitionDuplicateNameException(
-          "BeanDefinition with name " + name + " already exists");
+      throw new BeanDefinitionDuplicateNameException(String.format(
+          "BeanDefinition with name %s already exists. Registry BeanDefinition class is %s and " +
+              "provided for creation is %s", name, registry.get(name).getBeanClass(),
+          beanDefinition.getBeanClass()));
     }
     registry.put(name, beanDefinition);
     log.debug("A new BeanDefinition with name {} for class {} has been registered successfully",

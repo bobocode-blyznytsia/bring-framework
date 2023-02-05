@@ -5,8 +5,8 @@ import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class BeanDefinitionRegistryImplTest {
-  private BeanDefinitionRegistryImpl beanDefinitionRegistry = new BeanDefinitionRegistryImpl();
+class DefaultBeanDefinitionRegistryTest {
+  private DefaultBeanDefinitionRegistry beanDefinitionRegistry = new DefaultBeanDefinitionRegistry();
   private BeanDefinition beanDefinition = new BeanDefinitionImpl(Object.class, Map.of());
 
   @Test
