@@ -27,18 +27,18 @@ class AutowiredBeanPostProcessorTest {
 
 
   @Test
-  void injectsIntoField() {
+  void injectsIntoField() throws NoSuchFieldException {
     var testClassABean = new TestClassA();
     var secondBean = new TestClassB();
 
     var firstBeanDefinition = mock(BeanDefinition.class);
-    when(firstBeanDefinition.getAutowiredFieldsClassMetadata()).thenReturn(Collections.emptyMap());
+    when(firstBeanDefinition.getAutowiredFieldsMetadata()).thenReturn(Collections.emptyMap());
     when(beanDefinitionRegistry.getBeanDefinition("testClassA")).thenReturn(firstBeanDefinition);
 
     var secondBeanDefinition = mock(BeanDefinition.class);
-    when(secondBeanDefinition.<TestClassB>getBeanClass()).thenReturn(TestClassB.class);
-    when(secondBeanDefinition.getAutowiredFieldsClassMetadata())
-        .thenReturn(Map.of("testClassA", Object.class));
+    Field fieldToBeInjected = TestClassB.class.getDeclaredField("testClassA");
+    when(secondBeanDefinition.getAutowiredFieldsMetadata())
+        .thenReturn(Map.of("testClassA", fieldToBeInjected));
     when(beanDefinitionRegistry.getBeanDefinition("testClassB")).thenReturn(secondBeanDefinition);
 
     Map<String, Object> rawBeans = Map.of(

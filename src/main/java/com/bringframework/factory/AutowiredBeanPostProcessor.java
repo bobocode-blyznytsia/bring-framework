@@ -37,19 +37,10 @@ public class AutowiredBeanPostProcessor implements BeanPostProcessor {
   private void processBean(String beanName, Object bean) {
     var beanDefinition = definitionRegistry.getBeanDefinition(beanName);
     log.debug("Injecting autowired field dependencies for bean {}", beanName);
-    beanDefinition.getAutowiredFieldsClassMetadata().keySet().stream()
-        .map(fieldName -> getFieldByName(beanDefinition.getBeanClass(), fieldName))
+    beanDefinition.getAutowiredFieldsMetadata().values()
         .forEach(field -> populateField(field, bean));
   }
 
-  private Field getFieldByName(Class<?> clazz, String fieldName) {
-    try {
-      return clazz.getDeclaredField(fieldName);
-    } catch (NoSuchFieldException e) {
-      throw new BeanInjectionException(
-          "Cannot find field '%s' in %s class".formatted(fieldName, clazz), e);
-    }
-  }
 
   private void populateField(Field field, Object targetBean) {
     var candidate = getCandidateOfType(field.getType());

@@ -3,8 +3,8 @@ package com.bringframework.resolver;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 import com.bringframework.exceptions.NoSuchBeanException;
 import com.bringframework.exceptions.NoUniqueBeanException;
@@ -33,10 +33,10 @@ class DefaultDependencyResolverTest {
   @Test
   void multipleCandidateFound_NoUniqueBeanExceptionThrown() {
     var linkedListBeanDefinition = mock(BeanDefinition.class);
-    when(linkedListBeanDefinition.<LinkedList>getBeanClass()).thenReturn(LinkedList.class);
+    doReturn(LinkedList.class).when(linkedListBeanDefinition).getBeanClass();
 
     var arrayListBeanDefinition = mock(BeanDefinition.class);
-    when(arrayListBeanDefinition.<ArrayList>getBeanClass()).thenReturn(ArrayList.class);
+    doReturn(ArrayList.class).when(arrayListBeanDefinition).getBeanClass();
 
     Map<String, BeanDefinition> beanDefinitionMap = Map.of(
         "arrayList", arrayListBeanDefinition,
@@ -52,7 +52,7 @@ class DefaultDependencyResolverTest {
   @Test
   void candidateResolvedForSameType() {
     var linkedListBeanDefinition = mock(BeanDefinition.class);
-    when(linkedListBeanDefinition.<LinkedList>getBeanClass()).thenReturn(LinkedList.class);
+    doReturn(LinkedList.class).when(linkedListBeanDefinition).getBeanClass();
 
     var expectedCandidateName = "linkedList";
     Map<String, BeanDefinition> beanDefinitionMap =
@@ -67,7 +67,7 @@ class DefaultDependencyResolverTest {
   @Test
   void candidateResolvedForSubtype() {
     var linkedListBeanDefinition = mock(BeanDefinition.class);
-    when(linkedListBeanDefinition.<LinkedList>getBeanClass()).thenReturn(LinkedList.class);
+    doReturn(LinkedList.class).when(linkedListBeanDefinition).getBeanClass();
 
     var expectedCandidateName = "linkedList";
     Map<String, BeanDefinition> beanDefinitionMap =
@@ -82,7 +82,7 @@ class DefaultDependencyResolverTest {
   @Test
   void candidateResolvedForInterfaceImplementation() {
     var linkedListBeanDefinition = mock(BeanDefinition.class);
-    when(linkedListBeanDefinition.<LinkedList>getBeanClass()).thenReturn(LinkedList.class);
+    doReturn(LinkedList.class).when(linkedListBeanDefinition).getBeanClass();
 
     var expectedCandidateName = "linkedList";
     Map<String, BeanDefinition> beanDefinitionMap =
