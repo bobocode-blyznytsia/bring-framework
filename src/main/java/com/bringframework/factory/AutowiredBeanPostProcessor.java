@@ -22,8 +22,8 @@ public class AutowiredBeanPostProcessor implements BeanPostProcessor {
 
   public AutowiredBeanPostProcessor(BeanDefinitionRegistry registry, Map<String, Object> rawBeans) {
     this.rawBeans = rawBeans;
-    definitionRegistry = registry;
-    dependencyResolver = new DefaultDependencyResolver(definitionRegistry.getAllBeanDefinitions());
+    this.definitionRegistry = registry;
+    this.dependencyResolver = new DefaultDependencyResolver(definitionRegistry.getAllBeanDefinitions());
   }
 
 

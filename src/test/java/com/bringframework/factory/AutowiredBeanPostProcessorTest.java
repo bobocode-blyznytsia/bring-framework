@@ -1,5 +1,6 @@
 package com.bringframework.factory;
 
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -10,7 +11,6 @@ import java.lang.reflect.Field;
 import java.util.Collections;
 import java.util.Map;
 import lombok.SneakyThrows;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -18,12 +18,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class AutowiredBeanPostProcessorTest {
+  public static final String TEST_CLASS_A_BEAN_NAME = "testClassA";
+  public static final String TEST_CLASS_B_BEAN_NAME = "testClassB";
+  public static final String TEST_CLASS_A_FIELD_NAME = "testClassA";
 
   @Mock
-  DependencyResolver dependencyResolver;
+  private DependencyResolver dependencyResolver;
   @Mock
-  BeanDefinitionRegistry beanDefinitionRegistry;
-  AutowiredBeanPostProcessor autowiredBPP;
+  private BeanDefinitionRegistry beanDefinitionRegistry;
+  private AutowiredBeanPostProcessor autowiredBPP;
 
 
   @Test
@@ -33,26 +36,26 @@ class AutowiredBeanPostProcessorTest {
 
     var firstBeanDefinition = mock(BeanDefinition.class);
     when(firstBeanDefinition.getAutowiredFieldsMetadata()).thenReturn(Collections.emptyMap());
-    when(beanDefinitionRegistry.getBeanDefinition("testClassA")).thenReturn(firstBeanDefinition);
+    when(beanDefinitionRegistry.getBeanDefinition(TEST_CLASS_A_BEAN_NAME)).thenReturn(firstBeanDefinition);
 
     var secondBeanDefinition = mock(BeanDefinition.class);
-    Field fieldToBeInjected = TestClassB.class.getDeclaredField("testClassA");
+    Field testClassAField = TestClassB.class.getDeclaredField(TEST_CLASS_A_FIELD_NAME);
     when(secondBeanDefinition.getAutowiredFieldsMetadata())
-        .thenReturn(Map.of("testClassA", fieldToBeInjected));
-    when(beanDefinitionRegistry.getBeanDefinition("testClassB")).thenReturn(secondBeanDefinition);
+        .thenReturn(Map.of(TEST_CLASS_A_FIELD_NAME, testClassAField));
+    when(beanDefinitionRegistry.getBeanDefinition(TEST_CLASS_B_BEAN_NAME)).thenReturn(secondBeanDefinition);
 
     Map<String, Object> rawBeans = Map.of(
-        "testClassA", testClassABean,
-        "testClassB", secondBean
+        TEST_CLASS_A_BEAN_NAME, testClassABean,
+        TEST_CLASS_B_BEAN_NAME, secondBean
     );
 
-    when(dependencyResolver.getCandidateNameOfType(TestClassA.class)).thenReturn("testClassA");
+    when(dependencyResolver.getCandidateNameOfType(TestClassA.class)).thenReturn(TEST_CLASS_A_BEAN_NAME);
     autowiredBPP = new AutowiredBeanPostProcessor(beanDefinitionRegistry, rawBeans);
     injectMockDependencyResolver();
 
     autowiredBPP.process();
 
-    Assertions.assertSame(testClassABean, secondBean.testClassA);
+    assertSame(testClassABean, secondBean.testClassA);
   }
 
   @SneakyThrows

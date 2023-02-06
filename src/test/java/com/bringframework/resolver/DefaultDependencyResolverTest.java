@@ -21,9 +21,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class DefaultDependencyResolverTest {
+  
+  private static final String LINKED_LIST_BEAN_NAME = "linkedList";
+  private static final String ARRAY_LIST_BEAN_NAME = "arrayList";
 
   @Test
-  void noCandidateFound_NoSuchBeanExceptionThrown() {
+  void noSuchBeanExceptionThrownWhenNoCandidateFound() {
     var dependencyResolver = new DefaultDependencyResolver(Collections.emptyMap());
     var desiredCandidateType = Object.class;
     assertThrows(NoSuchBeanException.class,
@@ -31,67 +34,46 @@ class DefaultDependencyResolverTest {
   }
 
   @Test
-  void multipleCandidateFound_NoUniqueBeanExceptionThrown() {
-    var linkedListBeanDefinition = mock(BeanDefinition.class);
-    doReturn(LinkedList.class).when(linkedListBeanDefinition).getBeanClass();
-
-    var arrayListBeanDefinition = mock(BeanDefinition.class);
-    doReturn(ArrayList.class).when(arrayListBeanDefinition).getBeanClass();
+  void noUniqueBeanExceptionThrownWhenMultipleCandidateFound() {
+    var linkedListBeanDefinition = mockBeanDefinitionOfClass(LinkedList.class);
+    var arrayListBeanDefinition = mockBeanDefinitionOfClass(ArrayList.class);
 
     Map<String, BeanDefinition> beanDefinitionMap = Map.of(
-        "arrayList", arrayListBeanDefinition,
-        "linkedList", linkedListBeanDefinition
+        ARRAY_LIST_BEAN_NAME, arrayListBeanDefinition,
+        LINKED_LIST_BEAN_NAME, linkedListBeanDefinition
     );
 
     var dependencyResolver = new DefaultDependencyResolver(beanDefinitionMap);
     var desiredCandidateType = List.class;
-    assertThrows(NoUniqueBeanException.class,
-        () -> dependencyResolver.getCandidateNameOfType(desiredCandidateType));
+    assertThrows(NoUniqueBeanException.class, () -> dependencyResolver.getCandidateNameOfType(desiredCandidateType));
   }
 
   @Test
   void candidateResolvedForSameType() {
-    var linkedListBeanDefinition = mock(BeanDefinition.class);
-    doReturn(LinkedList.class).when(linkedListBeanDefinition).getBeanClass();
-
-    var expectedCandidateName = "linkedList";
-    Map<String, BeanDefinition> beanDefinitionMap =
-        Map.of(expectedCandidateName, linkedListBeanDefinition);
-
-    var dependencyResolver = new DefaultDependencyResolver(beanDefinitionMap);
-
-    assertEquals(expectedCandidateName,
-        dependencyResolver.getCandidateNameOfType(LinkedList.class));
+    var dependencyResolver = new DefaultDependencyResolver(linkedListBeanDefinitionMap());
+    assertEquals(LINKED_LIST_BEAN_NAME, dependencyResolver.getCandidateNameOfType(LinkedList.class));
   }
 
   @Test
   void candidateResolvedForSubtype() {
-    var linkedListBeanDefinition = mock(BeanDefinition.class);
-    doReturn(LinkedList.class).when(linkedListBeanDefinition).getBeanClass();
-
-    var expectedCandidateName = "linkedList";
-    Map<String, BeanDefinition> beanDefinitionMap =
-        Map.of(expectedCandidateName, linkedListBeanDefinition);
-
-    var dependencyResolver = new DefaultDependencyResolver(beanDefinitionMap);
-
-    assertEquals(expectedCandidateName,
-        dependencyResolver.getCandidateNameOfType(AbstractList.class));
+    var dependencyResolver = new DefaultDependencyResolver(linkedListBeanDefinitionMap());
+    assertEquals(LINKED_LIST_BEAN_NAME, dependencyResolver.getCandidateNameOfType(AbstractList.class));
   }
 
   @Test
   void candidateResolvedForInterfaceImplementation() {
-    var linkedListBeanDefinition = mock(BeanDefinition.class);
-    doReturn(LinkedList.class).when(linkedListBeanDefinition).getBeanClass();
+    var dependencyResolver = new DefaultDependencyResolver(linkedListBeanDefinitionMap());
+    assertEquals(LINKED_LIST_BEAN_NAME, dependencyResolver.getCandidateNameOfType(List.class));
+  }
 
-    var expectedCandidateName = "linkedList";
-    Map<String, BeanDefinition> beanDefinitionMap =
-        Map.of(expectedCandidateName, linkedListBeanDefinition);
+  private Map<String, BeanDefinition> linkedListBeanDefinitionMap(){
+    return Map.of(LINKED_LIST_BEAN_NAME, mockBeanDefinitionOfClass(LinkedList.class));
+  }
 
-    var dependencyResolver = new DefaultDependencyResolver(beanDefinitionMap);
-
-    assertEquals(expectedCandidateName,
-        dependencyResolver.getCandidateNameOfType(List.class));
+  private BeanDefinition mockBeanDefinitionOfClass(Class<?> clazz) {
+    var beanDefinition = mock(BeanDefinition.class);
+    doReturn(clazz).when(beanDefinition).getBeanClass();
+    return beanDefinition;
   }
 
 }
