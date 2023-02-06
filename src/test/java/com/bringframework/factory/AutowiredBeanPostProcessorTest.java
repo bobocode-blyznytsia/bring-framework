@@ -18,9 +18,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class AutowiredBeanPostProcessorTest {
-  public static final String TEST_CLASS_A_BEAN_NAME = "testClassA";
-  public static final String TEST_CLASS_B_BEAN_NAME = "testClassB";
-  public static final String TEST_CLASS_A_FIELD_NAME = "testClassA";
+  private static final String TEST_CLASS_A_BEAN_NAME = "testClassA";
+  private static final String TEST_CLASS_B_BEAN_NAME = "testClassB";
+  private static final String TEST_CLASS_A_FIELD_NAME = "testClassA";
 
   @Mock
   private DependencyResolver dependencyResolver;
