@@ -16,10 +16,12 @@ public class BeanFactoryImpl implements BeanFactory {
   private final Map<String, Object> rawBeansMap = new ConcurrentHashMap<>();
   private final BeanDefinitionRegistry beanDefinitionRegistry;
   private final RawBeanProcessor rawBeanProcessor;
+  private final List<BeanPostProcessor> beanPostProcessorList;
 
   public BeanFactoryImpl(BeanDefinitionRegistry beanDefinitionRegistry) {
     this.beanDefinitionRegistry = beanDefinitionRegistry;
     this.rawBeanProcessor = new RawBeanProcessor(this.beanDefinitionRegistry, rawBeansMap);
+    this.beanPostProcessorList = new ArrayList<>();
   }
 
   /**
@@ -28,7 +30,6 @@ public class BeanFactoryImpl implements BeanFactory {
   @Override
   public Map<String, Object> createBeans() {
     rawBeanProcessor.process();
-    List<BeanPostProcessor> beanPostProcessorList = new ArrayList<>();
     beanPostProcessorList.forEach(BeanPostProcessor::process);
     return rawBeansMap;
   }
