@@ -17,4 +17,3 @@ public interface DependencyResolver {
    */
   String getCandidateNameOfType(Class<?> candidateType, Annotation... metadata);
 }
-

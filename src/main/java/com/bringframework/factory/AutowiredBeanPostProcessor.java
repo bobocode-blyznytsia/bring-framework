@@ -26,7 +26,6 @@ public class AutowiredBeanPostProcessor implements BeanPostProcessor {
     this.dependencyResolver = new DefaultDependencyResolver(definitionRegistry.getAllBeanDefinitions());
   }
 
-
   @Override
   public void process() {
     log.debug("Injecting dependencies into autowired fields");
@@ -40,7 +39,6 @@ public class AutowiredBeanPostProcessor implements BeanPostProcessor {
     beanDefinition.getAutowiredFieldsMetadata().values()
         .forEach(field -> populateField(field, bean));
   }
-
 
   private void populateField(Field field, Object targetBean) {
     var candidate = getCandidateOfType(field.getType());
