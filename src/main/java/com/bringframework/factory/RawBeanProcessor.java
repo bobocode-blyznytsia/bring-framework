@@ -36,7 +36,7 @@ public class RawBeanProcessor {
   }
 
   private void initializeBean(String beanName, BeanDefinition beanDefinition) {
-    Class<Object> beanClass = beanDefinition.getBeanClass();
+    var beanClass = beanDefinition.getBeanClass();
     Object bean = createInstance(beanClass);
     rawBeanMap.put(beanName, bean);
     log.debug("Bean with name {} of type {} has been created.", beanName,
