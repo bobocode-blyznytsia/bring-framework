@@ -65,7 +65,7 @@ public class AnnotationConfigApplicationContext implements ApplicationContext {
     log.trace("Retrieved all beans with type {}", beanType.getSimpleName());
     return beans.entrySet().stream()
         .filter(entry -> beanType.isAssignableFrom(entry.getValue().getClass()))
-        .collect(Collectors.toMap(Map.Entry::getKey, entry -> (T) entry.getValue()));
+        .collect(Collectors.toMap(Map.Entry::getKey, entry -> beanType.cast(entry.getValue())));
   }
 
 }
