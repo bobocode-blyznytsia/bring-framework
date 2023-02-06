@@ -1,15 +1,14 @@
-package com.bobocode.util;
+package com.bringframework.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.bringframework.exceptions.BeanInitializationException;
-import com.bringframework.util.BeanUtils;
 import java.util.AbstractList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 
-public class BeanUtilsTest {
+class BeanUtilsTest {
 
   @Test
   void shouldThrowBeanInitializationExceptionWhenNoDefaultConstructorFound() {

@@ -1,12 +1,13 @@
-package com.bobocode.factory;
+package com.bringframework.factory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-import com.bringframework.factory.RawBeanProcessor;
 import com.bringframework.registry.BeanDefinition;
+import com.bringframework.registry.BeanDefinitionImpl;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-public class RawBeanProcessorTest {
+class RawBeanProcessorTest {
 
   @Mock
   private BeanDefinitionRegistry beanDefinitionRegistry;
@@ -34,11 +35,9 @@ public class RawBeanProcessorTest {
 
   @Test
   void shouldProcessBeanDefinitions() {
-    BeanDefinition stringBeanDefinition = mock(BeanDefinition.class);
-    when(stringBeanDefinition.<String>getBeanClass()).thenReturn(String.class);
-
-    BeanDefinition arrayListBeanDefinition = mock(BeanDefinition.class);
-    when(arrayListBeanDefinition.<ArrayList>getBeanClass()).thenReturn(ArrayList.class);
+    BeanDefinition stringBeanDefinition = BeanDefinitionImpl.builder().clazz(String.class).build();
+    BeanDefinition arrayListBeanDefinition =
+        BeanDefinitionImpl.builder().clazz(ArrayList.class).build();
 
     Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
     beanDefinitionMap.put("stringBean", stringBeanDefinition);
