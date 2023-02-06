@@ -1,6 +1,5 @@
 package com.bringframework.factory;
 
-import com.bringframework.registry.BeanDefinition;
 import java.util.Map;
 
 /**
@@ -9,9 +8,10 @@ import java.util.Map;
 public interface BeanFactory {
 
   /**
-   * Creates and initializes beans from a collection of {@link BeanDefinition}s.
+   * Creates and initializes beans from a collection
+   * of {@link com.bringframework.registry.BeanDefinition}s.
    *
-   * @return bean map, where key - bean name, and value - new instance of the bean
+   * @return a map of bean names and new instance of the bean
    */
   Map<String, Object> createBeans();
 }
