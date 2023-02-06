@@ -19,7 +19,7 @@ public class BeanFactoryImpl implements BeanFactory {
 
   public BeanFactoryImpl(BeanDefinitionRegistry beanDefinitionRegistry) {
     this.beanDefinitionRegistry = beanDefinitionRegistry;
-    rawBeanProcessor = new RawBeanProcessor(this.beanDefinitionRegistry, rawBeansMap);
+    this.rawBeanProcessor = new RawBeanProcessor(this.beanDefinitionRegistry, rawBeansMap);
   }
 
   /**

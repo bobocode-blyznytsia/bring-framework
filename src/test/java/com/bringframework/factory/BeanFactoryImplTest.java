@@ -1,5 +1,7 @@
 package com.bringframework.factory;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 import com.bringframework.factory.impl.BeanFactoryImpl;
@@ -8,7 +10,6 @@ import com.bringframework.registry.BeanDefinitionImpl;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import java.util.HashMap;
 import java.util.Map;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -34,7 +35,7 @@ class BeanFactoryImplTest {
     Map<String, Object> readyBeans = beanFactory.createBeans();
 
     //then
-    Assertions.assertEquals(1, readyBeans.size());
-    Assertions.assertTrue(readyBeans.containsKey("str"));
+    assertEquals(1, readyBeans.size());
+    assertTrue(readyBeans.containsKey("str"));
   }
 }
