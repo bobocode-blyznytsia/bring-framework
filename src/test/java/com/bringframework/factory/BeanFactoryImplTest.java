@@ -1,14 +1,13 @@
-package com.bobocode.factory;
+package com.bringframework.factory;
 
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.bringframework.factory.impl.BeanFactoryImpl;
 import com.bringframework.registry.BeanDefinition;
+import com.bringframework.registry.BeanDefinitionImpl;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,8 +23,7 @@ class BeanFactoryImplTest {
   @Test
   void shouldProcessBeanDefinitions() {
     //given
-    BeanDefinition stringBeanDefinition = mock(BeanDefinition.class);
-    when(stringBeanDefinition.<String>getBeanClass()).thenReturn(String.class);
+    BeanDefinition stringBeanDefinition = BeanDefinitionImpl.builder().clazz(String.class).build();
     Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
     beanDefinitionMap.put("str", stringBeanDefinition);
     when(beanDefinitionRegistry.getAllBeanDefinitions()).thenReturn(beanDefinitionMap);
