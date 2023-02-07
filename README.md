@@ -17,15 +17,15 @@ Bring Framework is an inversion of control and dependency injection framework. I
 To create application with usage of the Bring Framework, you have to clone Bring source code repository @todo.
 
 ## Build from source
-####1. Clone the repository
+#### 1. Clone the repository
 ```shell
 git clone todo
 ```
-####2. Build the Bring Framework locally by using Maven
+#### 2. Build the Bring Framework locally by using Maven
 ```shell
 mvn clean install
 ```
-####3. Add the Bring Framework dependency into your project `pom.xml`
+#### 3. Add the Bring Framework dependency into your project `pom.xml`
 ```xml
 <dependencies>
     ...
@@ -37,7 +37,7 @@ mvn clean install
     ...
 </dependencies>
 ```
-####4. Build your application by using maven
+#### 4. Build your application by using maven
 ```shell
 mvn clean package
 ```
