@@ -43,10 +43,10 @@ public class DefaultDependencyResolver implements DependencyResolver {
         .toList();
 
     if (candidateNames.isEmpty()) {
-      throw new NoSuchBeanException();
+      throw new NoSuchBeanException("No bean of type " + candidateType + "found");
     }
     if (candidateNames.size() > 1) {
-      throw new NoUniqueBeanException();
+      throw new NoUniqueBeanException(candidateType);
     }
     return candidateNames.get(0);
   }
