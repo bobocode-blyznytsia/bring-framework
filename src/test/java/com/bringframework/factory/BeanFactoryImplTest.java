@@ -8,10 +8,12 @@ import com.bringframework.factory.impl.BeanFactoryImpl;
 import com.bringframework.registry.BeanDefinition;
 import com.bringframework.registry.BeanDefinitionImpl;
 import com.bringframework.registry.BeanDefinitionRegistry;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -21,15 +23,20 @@ class BeanFactoryImplTest {
   @Mock
   private BeanDefinitionRegistry beanDefinitionRegistry;
 
+  @InjectMocks
+  private BeanFactoryImpl beanFactory;
+
   @Test
   void shouldProcessBeanDefinitions() {
     //given
-    BeanDefinition stringBeanDefinition = BeanDefinitionImpl.builder().clazz(String.class).build();
+    BeanDefinition stringBeanDefinition = BeanDefinitionImpl.builder()
+        .clazz(String.class)
+        .autowiredFieldsMetadata(Collections.emptyMap())
+        .build();
     Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
     beanDefinitionMap.put("str", stringBeanDefinition);
     when(beanDefinitionRegistry.getAllBeanDefinitions()).thenReturn(beanDefinitionMap);
-
-    BeanFactoryImpl beanFactory = new BeanFactoryImpl(beanDefinitionRegistry);
+    when(beanDefinitionRegistry.getBeanDefinition("str")).thenReturn(stringBeanDefinition);
 
     //when
     Map<String, Object> readyBeans = beanFactory.createBeans();

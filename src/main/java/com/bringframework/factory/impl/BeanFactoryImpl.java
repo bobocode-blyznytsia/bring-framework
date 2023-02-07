@@ -1,5 +1,6 @@
 package com.bringframework.factory.impl;
 
+import com.bringframework.factory.AutowiredBeanPostProcessor;
 import com.bringframework.factory.BeanFactory;
 import com.bringframework.factory.BeanPostProcessor;
 import com.bringframework.factory.RawBeanProcessor;
@@ -30,6 +31,7 @@ public class BeanFactoryImpl implements BeanFactory {
   @Override
   public Map<String, Object> createBeans() {
     rawBeanProcessor.process();
+    beanPostProcessorList.add(new AutowiredBeanPostProcessor(beanDefinitionRegistry, rawBeansMap));
     beanPostProcessorList.forEach(BeanPostProcessor::process);
     return rawBeansMap;
   }
