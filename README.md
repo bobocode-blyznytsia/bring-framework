@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="doc/bring.png" width="40%" alt="Bring Framework"/>
+    <img src="doc/bring.png" width="50%" alt="Bring Framework"/>
 </p>
 
 Bring Framework is an inversion of control and dependency injection framework. It allows you to declare what objects you need and then it processes configuration, creates required objects, sets dependencies and brings objects that are ready to use.
