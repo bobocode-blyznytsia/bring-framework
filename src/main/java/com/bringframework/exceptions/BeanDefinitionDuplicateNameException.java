@@ -7,7 +7,7 @@ import com.bringframework.registry.BeanDefinitionRegistry;
  * Exception thrown when {@link BeanDefinition} with the same name already exists in the
  * {@link BeanDefinitionRegistry}.
  **/
-public class BeanDefinitionDuplicateNameException extends RuntimeException {
+public class BeanDefinitionDuplicateNameException extends BringException {
 
   public BeanDefinitionDuplicateNameException(String message) {
     super(message);

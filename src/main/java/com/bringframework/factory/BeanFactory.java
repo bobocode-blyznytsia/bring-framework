@@ -15,4 +15,5 @@ public interface BeanFactory {
    *                        from
    */
   void createBeans(Collection<BeanDefinition> beanDefinitions);
+
 }
