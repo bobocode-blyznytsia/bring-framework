@@ -1,7 +1,5 @@
 package com.bringframework.context;
 
-import com.bringframework.exceptions.NoSuchBeanException;
-import com.bringframework.exceptions.NoUniqueBeanException;
 import java.util.Map;
 
 /**
@@ -13,6 +11,8 @@ public interface ApplicationContext {
 
   /**
    * Retrieves a bean of the specified type from the container.
+   * Throws {@code NoSuchBeanException} when bean with specified type is not exist
+   * and {@code NoUniqueBeanException} when there are several beans of specified type.
    *
    * @param beanType the type of the bean to retrieve
    * @param <T>      the generic type of the bean
@@ -22,6 +22,7 @@ public interface ApplicationContext {
 
   /**
    * Retrieves a bean with the specified name and type from the container.
+   * Throws {@code NoSuchBeanException} when bean with specified type and name is not exist.
    *
    * @param name     the name of the bean to retrieve
    * @param beanType the type of the bean to retrieve
