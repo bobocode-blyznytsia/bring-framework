@@ -45,3 +45,5 @@ mvn clean package
 ## Provided annotations
 - `@Autowired` to inject dependency into a bean field
 - `@Component` to mark class as a bean
+## Limitations
+- Circular dependencies detection does not supported
