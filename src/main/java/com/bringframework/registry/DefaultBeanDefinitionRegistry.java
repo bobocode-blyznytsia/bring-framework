@@ -1,6 +1,6 @@
 package com.bringframework.registry;
 
-import com.bringframework.exceptions.BeanDefinitionDuplicateNameException;
+import com.bringframework.exception.BeanDefinitionDuplicateNameException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,10 +20,7 @@ public class DefaultBeanDefinitionRegistry implements BeanDefinitionRegistry {
   @Override
   public void registerBeanDefinition(String name, BeanDefinition beanDefinition) {
     if (registry.containsKey(name)) {
-      throw new BeanDefinitionDuplicateNameException(String.format(
-          "BeanDefinition with name %s already exists. Registry BeanDefinition class is %s and "
-              + "provided for creation is %s", name, registry.get(name).getBeanClass(),
-          beanDefinition.getBeanClass()));
+      throw new BeanDefinitionDuplicateNameException(name);
     }
     registry.put(name, beanDefinition);
     log.debug("A new BeanDefinition with name {} for class {} has been registered successfully",

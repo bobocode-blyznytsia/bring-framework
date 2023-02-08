@@ -6,8 +6,8 @@ import static java.util.stream.Collectors.toMap;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.uncapitalize;
 
-import com.bringframework.annotations.Autowired;
-import com.bringframework.annotations.Component;
+import com.bringframework.annotation.Autowired;
+import com.bringframework.annotation.Component;
 import com.bringframework.registry.BeanDefinition;
 import com.bringframework.registry.BeanDefinitionImpl;
 import com.bringframework.registry.BeanDefinitionRegistry;

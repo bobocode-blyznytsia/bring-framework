@@ -1,6 +1,6 @@
 package com.bringframework.factory;
 
-import com.bringframework.exceptions.BeanInjectionException;
+import com.bringframework.exception.BeanInjectionException;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import com.bringframework.resolver.DefaultDependencyResolver;
 import com.bringframework.resolver.DependencyResolver;
@@ -48,8 +48,7 @@ public class AutowiredBeanPostProcessor implements BeanPostProcessor {
       field.set(targetBean, candidate);
       field.setAccessible(false);
     } catch (IllegalAccessException e) {
-      throw new BeanInjectionException(
-          "Failed to inject bean into field '%s'".formatted(field.getName()), e);
+      throw new BeanInjectionException(field, e);
     }
   }
 

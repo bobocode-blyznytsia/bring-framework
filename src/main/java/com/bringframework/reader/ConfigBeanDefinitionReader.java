@@ -11,9 +11,9 @@ import com.bringframework.registry.BeanDefinitionRegistry;
 public interface ConfigBeanDefinitionReader {
 
   /**
-   * Register configuration beans from a given class path.
+   * Register configuration beans from a given package.
    *
-   * @param classPath the class path to search for configuration beans
+   * @param packageName the package name to search for configuration beans
    */
-  void registerConfigBeans(String classPath);
+  void registerConfigBeans(String packageName);
 }
