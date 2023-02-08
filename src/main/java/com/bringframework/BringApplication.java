@@ -10,21 +10,23 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BringApplication {
 
+  private final String packageName;
   private ApplicationContext applicationContext;
 
-  public BringApplication() {
+  public BringApplication(String packageName) {
+    this.packageName = packageName;
   }
 
   /**
-   * Runs Bring Application and creates {@code ApplicationContext}.
+   * Runs Bring Application and creates {@link ApplicationContext}.
+   *
+   * @return created application context
    */
-  public void run() {
+  public ApplicationContext run() {
     log.info("Starting Bring application...");
-    applicationContext = createApplicationContext();
-  }
-
-  private ApplicationContext createApplicationContext() {
-    return new AnnotationConfigApplicationContext();
+    this.applicationContext = new AnnotationConfigApplicationContext(packageName);
+    log.info("Bring application was started successfully.");
+    return applicationContext;
   }
 
   /**
