@@ -38,4 +38,13 @@ class BeanUtilsTest {
     assertEquals(actualException.getCause().getClass(), NoSuchMethodException.class);
   }
 
+  @Test
+  void shouldThrowExceptionWhenPackageNameIsNull() {
+    assertThrows(IllegalArgumentException.class, () -> BeanUtils.validatePackageName(null));
+  }
+
+  @Test
+  void shouldThrowExceptionWhenPackageNameIsEmpty() {
+    assertThrows(IllegalArgumentException.class, () -> BeanUtils.validatePackageName("   "));
+  }
 }
