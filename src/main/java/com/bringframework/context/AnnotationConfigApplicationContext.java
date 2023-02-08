@@ -1,5 +1,7 @@
 package com.bringframework.context;
 
+import static com.bringframework.util.BeanUtils.validatePackageName;
+
 import com.bringframework.exceptions.NoSuchBeanException;
 import com.bringframework.exceptions.NoUniqueBeanException;
 import com.bringframework.factory.BeanFactory;
@@ -21,6 +23,7 @@ public class AnnotationConfigApplicationContext implements ApplicationContext {
   private final Map<String, Object> beans;
 
   public AnnotationConfigApplicationContext(String packageName) {
+    validatePackageName(packageName);
     log.trace("Application context is collecting...");
     BeanDefinitionRegistry beanDefinitionRegistry = new DefaultBeanDefinitionRegistry();
     new DefaultBeanDefinitionReader(beanDefinitionRegistry).registerBeans(packageName);

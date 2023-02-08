@@ -1,5 +1,7 @@
 package com.bringframework;
 
+import static com.bringframework.util.BeanUtils.validatePackageName;
+
 import com.bringframework.context.AnnotationConfigApplicationContext;
 import com.bringframework.context.ApplicationContext;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +16,7 @@ public class BringApplication {
   private ApplicationContext applicationContext;
 
   public BringApplication(String packageName) {
+    validatePackageName(packageName);
     this.packageName = packageName;
   }
 
