@@ -32,7 +32,7 @@ class DefaultBeanDefinitionReaderTest {
 
   @Test
   void shouldRegisterBeans() {
-    underTest.registerBeans("com.bringframework");
+    underTest.registerBeans("com.bringframework.reader");
 
     verify(registry, times(1)).registerBeanDefinition(beanDefinitionNameArgumentCaptor.capture(),
         beanDefinitionArgumentCaptor.capture());
