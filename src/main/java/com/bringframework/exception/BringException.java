@@ -1,4 +1,4 @@
-package com.bringframework.exceptions;
+package com.bringframework.exception;
 
 /**
  * Exception thrown by Bring application. It is a super class of all exceptions that can produce

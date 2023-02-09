@@ -1,4 +1,4 @@
-package com.bringframework.reader;
+package com.bringframework.scanner;
 
 import com.bringframework.registry.BeanDefinition;
 import com.bringframework.registry.BeanDefinitionRegistry;
@@ -8,12 +8,12 @@ import com.bringframework.registry.BeanDefinitionRegistry;
  * configuration beans creating {@link BeanDefinition}s and registering them with a
  * {@link BeanDefinitionRegistry}.
  */
-public interface ConfigBeanDefinitionReader {
+public interface ConfigBeanDefinitionScanner {
 
   /**
-   * Register configuration beans from a given class path.
+   * Register configuration beans from a given package.
    *
-   * @param classPath the class path to search for configuration beans
+   * @param packageName the package name to search for configuration beans
    */
-  void registerConfigBeans(String classPath);
+  void registerConfigBeans(String packageName);
 }

@@ -1,7 +1,7 @@
 package com.bringframework.resolver;
 
-import com.bringframework.exceptions.NoSuchBeanException;
-import com.bringframework.exceptions.NoUniqueBeanException;
+import com.bringframework.exception.NoSuchBeanException;
+import com.bringframework.exception.NoUniqueBeanException;
 import com.bringframework.registry.BeanDefinition;
 import java.lang.annotation.Annotation;
 import java.util.HashMap;
@@ -43,7 +43,7 @@ public class DefaultDependencyResolver implements DependencyResolver {
         .toList();
 
     if (candidateNames.isEmpty()) {
-      throw new NoSuchBeanException("No bean of type " + candidateType + " found");
+      throw new NoSuchBeanException(candidateType);
     }
     if (candidateNames.size() > 1) {
       throw new NoUniqueBeanException(candidateType);
