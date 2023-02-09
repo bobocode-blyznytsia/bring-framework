@@ -10,10 +10,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class IntegrationTest {
+class BringApplicationIT {
 
   @Test
-  void test() {
+  void generalBringApplicationTest() {
     ApplicationContext testAppContext = new BringApplication("com.bringframework.integration.service").run();
 
     ChatService chatService = testAppContext.getBean(ChatService.class);
