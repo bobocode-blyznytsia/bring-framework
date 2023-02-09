@@ -1,4 +1,4 @@
-package com.bringframework.reader;
+package com.bringframework.scanner;
 
 import static java.util.Objects.nonNull;
 import static java.util.function.Function.identity;
@@ -17,17 +17,17 @@ import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 
 /**
- * Default implementation of {@link BeanDefinitionReader}.
- * This Reader scans provided package name and registers found {@link BeanDefinition}s
+ * Default implementation of {@link BeanDefinitionScanner}.
+ * This Scanner reads provided package name and registers found {@link BeanDefinition}s
  * in a {@link BeanDefinitionRegistry}. By default, it looks for classes annotated
  * with {@link Component} annotation.
  */
 @Slf4j
-public class DefaultBeanDefinitionReader implements BeanDefinitionReader {
+public class DefaultBeanDefinitionScanner implements BeanDefinitionScanner {
 
   private final BeanDefinitionRegistry registry;
 
-  public DefaultBeanDefinitionReader(BeanDefinitionRegistry registry) {
+  public DefaultBeanDefinitionScanner(BeanDefinitionRegistry registry) {
     this.registry = registry;
   }
 

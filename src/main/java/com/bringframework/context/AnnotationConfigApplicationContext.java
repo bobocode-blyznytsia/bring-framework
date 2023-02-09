@@ -2,10 +2,10 @@ package com.bringframework.context;
 
 import com.bringframework.exception.NoSuchBeanException;
 import com.bringframework.exception.NoUniqueBeanException;
-import com.bringframework.reader.BeanDefinitionReader;
-import com.bringframework.reader.DefaultBeanDefinitionReader;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import com.bringframework.registry.DefaultBeanDefinitionRegistry;
+import com.bringframework.scanner.BeanDefinitionScanner;
+import com.bringframework.scanner.DefaultBeanDefinitionScanner;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ public class AnnotationConfigApplicationContext implements ApplicationContext {
   public AnnotationConfigApplicationContext() {
     log.trace("Application context is collecting...");
     BeanDefinitionRegistry beanDefinitionRegistry = new DefaultBeanDefinitionRegistry();
-    BeanDefinitionReader beanDefinitionReader = new DefaultBeanDefinitionReader(
+    BeanDefinitionScanner beanDefinitionScanner = new DefaultBeanDefinitionScanner(
         beanDefinitionRegistry);
     //ConfigBeanDefinitionReader configBeanDefinitionReader = new ConfigBeanDefinitionReaderImpl(
     //  beanDefinitionRegistry);
