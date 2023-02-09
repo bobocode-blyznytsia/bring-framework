@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
-import com.bringframework.exceptions.NoSuchBeanException;
-import com.bringframework.exceptions.NoUniqueBeanException;
+import com.bringframework.exception.NoSuchBeanException;
+import com.bringframework.exception.NoUniqueBeanException;
 import com.bringframework.registry.BeanDefinition;
 import java.util.AbstractList;
 import java.util.ArrayList;

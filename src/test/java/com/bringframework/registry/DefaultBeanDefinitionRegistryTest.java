@@ -1,6 +1,6 @@
 package com.bringframework.registry;
 
-import com.bringframework.exceptions.BeanDefinitionDuplicateNameException;
+import com.bringframework.exception.BeanDefinitionDuplicateNameException;
 import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
