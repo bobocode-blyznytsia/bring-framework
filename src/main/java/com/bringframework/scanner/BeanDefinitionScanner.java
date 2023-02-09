@@ -1,4 +1,4 @@
-package com.bringframework.reader;
+package com.bringframework.scanner;
 
 import com.bringframework.registry.BeanDefinition;
 import com.bringframework.registry.BeanDefinitionRegistry;
@@ -7,7 +7,7 @@ import com.bringframework.registry.BeanDefinitionRegistry;
  * Implementations of this interface are responsible for scanning package by given packageName
  * creating {@link BeanDefinition}s and registering them with a {@link BeanDefinitionRegistry}.
  */
-public interface BeanDefinitionReader {
+public interface BeanDefinitionScanner {
 
   /**
    * Registers beans from the specified package.
