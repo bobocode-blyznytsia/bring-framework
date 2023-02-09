@@ -1,7 +1,7 @@
 package com.bringframework.integration.service;
 
-import com.bringframework.annotations.Autowired;
-import com.bringframework.annotations.Component;
+import com.bringframework.annotation.Autowired;
+import com.bringframework.annotation.Component;
 import lombok.Getter;
 
 @Component

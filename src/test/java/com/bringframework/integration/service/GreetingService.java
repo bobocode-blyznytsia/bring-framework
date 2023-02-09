@@ -1,6 +1,6 @@
 package com.bringframework.integration.service;
 
-import com.bringframework.annotations.Component;
+import com.bringframework.annotation.Component;
 
 @Component
 public class GreetingService {
