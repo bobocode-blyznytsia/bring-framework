@@ -4,7 +4,7 @@ import com.bringframework.context.ApplicationContext;
 import java.util.Map;
 
 /**
- * Interface for a registry that holds {@link BeanDefinition}.
+ * Interface for a registry that holds {@link BeanDefinition} and {@link ConfigBeanDefinition}.
  *
  * <p>This is used by the {@link ApplicationContext} to create and manage bean instances.
  **/
@@ -18,8 +18,13 @@ public interface BeanDefinitionRegistry {
    */
   void registerBeanDefinition(String name, BeanDefinition beanDefinition);
 
-  //TODO Add and fix JavaDocs
-  void registerConfigBeanDefinition(String name, ConfigBeanDefinition beanDefinition);
+  /**
+   * Register a {@link ConfigBeanDefinition} with the given name.
+   *
+   * @param name                 the name of the bean definition
+   * @param configBeanDefinition the {@link ConfigBeanDefinition} instance to register
+   */
+  void registerConfigBeanDefinition(String name, ConfigBeanDefinition configBeanDefinition);
 
   /**
    * Retrieve the {@link BeanDefinition} for the given bean name.
@@ -29,17 +34,26 @@ public interface BeanDefinitionRegistry {
    */
   BeanDefinition getBeanDefinition(String name);
 
-  //TODO Add and fix JavaDocs
+  /**
+   * Retrieve the {@link ConfigBeanDefinition} for the given bean name.
+   *
+   * @param name the name of the config bean definition
+   * @return the {@link ConfigBeanDefinition} for the given name.
+   */
   ConfigBeanDefinition getConfigBeanDefinition(String name);
 
   /**
    * Retrieve all registered {@link BeanDefinition}s.
    *
-   * @return a map of all registered bean definitions, with bean name as key and
-   *     {@link BeanDefinition} as value
+   * @return a map of all registered bean definitions, with bean name as key and {@link BeanDefinition} as value
    */
   Map<String, BeanDefinition> getAllBeanDefinitions();
 
-  //TODO Add and fix JavaDocs
+  /**
+   * Retrieve all registered {@link ConfigBeanDefinition}s.
+   *
+   * @return a map of all registered config bean definitions, with bean name as key and {@link ConfigBeanDefinition} as
+   *     value
+   */
   Map<String, ConfigBeanDefinition> getAllConfigBeanDefinitions();
 }

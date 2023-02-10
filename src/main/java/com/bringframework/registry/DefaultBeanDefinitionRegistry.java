@@ -6,11 +6,9 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;
 
-//TODO fix JavaDocs
-
 /**
- * Base implementation of {@link BeanDefinitionRegistry} used to store {@link BeanDefinition} and retrieve them. This
- * implementation is thread-safe.
+ * Base implementation of {@link BeanDefinitionRegistry} used to store {@link BeanDefinition} and
+ * {@link ConfigBeanDefinition} and retrieve them. This implementation is thread-safe.
  */
 @Slf4j
 public class DefaultBeanDefinitionRegistry implements BeanDefinitionRegistry {
@@ -38,12 +36,6 @@ public class DefaultBeanDefinitionRegistry implements BeanDefinitionRegistry {
     configRegistry.put(name, beanDefinition);
     log.debug("A new BeanDefinition with name {} for class {} has been registered successfully", name,
         beanDefinition.factoryMethod().getReturnType().getSimpleName());
-  }
-
-  private void checkUniqueBeanName(String name) {
-    if (registry.containsKey(name) || configRegistry.containsKey(name)) {
-      throw new BeanDefinitionDuplicateNameException(name);
-    }
   }
 
   /**
@@ -80,5 +72,11 @@ public class DefaultBeanDefinitionRegistry implements BeanDefinitionRegistry {
   @Override
   public Map<String, ConfigBeanDefinition> getAllConfigBeanDefinitions() {
     return Collections.unmodifiableMap(configRegistry);
+  }
+
+  private void checkUniqueBeanName(String name) {
+    if (registry.containsKey(name) || configRegistry.containsKey(name)) {
+      throw new BeanDefinitionDuplicateNameException(name);
+    }
   }
 }
