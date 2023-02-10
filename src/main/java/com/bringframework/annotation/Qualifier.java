@@ -8,10 +8,13 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-//TODO Add documentation
+/**
+ * This annotation may be used on a field or parameter as a qualifier for candidate beans when autowiring.
+ */
 @Documented
 @Target({ElementType.FIELD, PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Qualifier {
+
   String value() default "";
 }

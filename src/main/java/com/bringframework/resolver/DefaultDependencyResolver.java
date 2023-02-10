@@ -49,7 +49,8 @@ public class DefaultDependencyResolver implements DependencyResolver {
   @Override
   public String getCandidateNameOfType(Class<?> candidateType, Annotation... metadata) {
     log.debug("Resolving a candidate of type {}", candidateType.getSimpleName());
-    return getQualifierValueOptional(metadata).map(name -> findAndValidateCandidateName(name, candidateType))
+    return getQualifierValueOptional(metadata)
+        .map(name -> findAndValidateCandidateName(name, candidateType))
         .orElseGet(() -> findCandidateByType(candidateType));
   }
 
@@ -59,8 +60,10 @@ public class DefaultDependencyResolver implements DependencyResolver {
     Predicate<Map.Entry<String, ConfigBeanDefinition>> validateConfigBean =
         entry -> candidateType.isAssignableFrom(entry.getValue().factoryMethod().getReturnType());
 
-    List<String> candidateNames = Stream.concat(beanDefinitions.entrySet().stream().filter(validateRegularBean),
-        configBeanDefinition.entrySet().stream().filter(validateConfigBean)).map(Map.Entry::getKey).toList();
+    List<String> candidateNames =
+        Stream.concat(beanDefinitions.entrySet().stream().filter(validateRegularBean),
+                configBeanDefinition.entrySet().stream().filter(validateConfigBean))
+            .map(Map.Entry::getKey).toList();
 
     if (candidateNames.isEmpty()) {
       throw new NoSuchBeanException(candidateType);
@@ -72,11 +75,17 @@ public class DefaultDependencyResolver implements DependencyResolver {
   }
 
   private String findAndValidateCandidateName(String candidateName, Class<?> candidateType) {
-    Boolean isRegularBean = Optional.ofNullable(beanDefinitions.get(candidateName)).map(BeanDefinition::getBeanClass)
-        .map(candidateType::isAssignableFrom).orElse(false);
+    Boolean isRegularBean =
+        Optional.ofNullable(beanDefinitions.get(candidateName))
+            .map(BeanDefinition::getBeanClass)
+            .map(candidateType::isAssignableFrom)
+            .orElse(false);
     Boolean isConfigBean =
-        Optional.ofNullable(configBeanDefinition.get(candidateName)).map(ConfigBeanDefinition::factoryMethod)
-            .map(Method::getReturnType).map(candidateType::isAssignableFrom).orElse(false);
+        Optional.ofNullable(configBeanDefinition.get(candidateName))
+            .map(ConfigBeanDefinition::factoryMethod)
+            .map(Method::getReturnType)
+            .map(candidateType::isAssignableFrom)
+            .orElse(false);
     if (isConfigBean || isRegularBean) {
       return candidateName;
     }
@@ -84,7 +93,8 @@ public class DefaultDependencyResolver implements DependencyResolver {
   }
 
   private Optional<String> getQualifierValueOptional(Annotation... metadata) {
-    return Arrays.stream(metadata).filter(Qualifier.class::isInstance).findFirst()
+    return Arrays.stream(metadata)
+        .filter(Qualifier.class::isInstance).findFirst()
         .map(annotation -> ((Qualifier) annotation).value());
   }
 

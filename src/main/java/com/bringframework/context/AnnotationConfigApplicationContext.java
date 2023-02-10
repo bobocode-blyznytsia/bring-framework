@@ -5,7 +5,7 @@ import static com.bringframework.util.BeanUtils.validatePackageName;
 import com.bringframework.exception.NoSuchBeanException;
 import com.bringframework.exception.NoUniqueBeanException;
 import com.bringframework.factory.BeanFactory;
-import com.bringframework.factory.impl.BeanFactoryImpl;
+import com.bringframework.factory.BeanFactoryImpl;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import com.bringframework.registry.DefaultBeanDefinitionRegistry;
 import com.bringframework.scanner.DefaultBeanDefinitionScanner;
@@ -15,7 +15,8 @@ import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Implementation of {@link ApplicationContext} that uses annotation configuration to search and create beans.
+ * Implementation of {@link ApplicationContext} that uses annotation configuration to search and
+ * create beans.
  */
 @Slf4j
 public class AnnotationConfigApplicationContext implements ApplicationContext {
@@ -38,8 +39,9 @@ public class AnnotationConfigApplicationContext implements ApplicationContext {
     if (beansOfSpecifiedType.size() > 1) {
       throw new NoUniqueBeanException(beanType);
     }
-    T foundBean =
-        beansOfSpecifiedType.values().stream().findFirst().orElseThrow(() -> new NoSuchBeanException(beanType));
+    T foundBean = beansOfSpecifiedType.values().stream()
+        .findFirst()
+        .orElseThrow(() -> new NoSuchBeanException(beanType));
     log.trace("Retrieved bean with type {}", beanType.getSimpleName());
     return foundBean;
   }
@@ -58,7 +60,8 @@ public class AnnotationConfigApplicationContext implements ApplicationContext {
   @Override
   public <T> Map<String, T> getAllBeans(Class<T> beanType) {
     log.trace("Retrieved all beans with type {}", beanType.getSimpleName());
-    return beans.entrySet().stream().filter(entry -> beanType.isAssignableFrom(entry.getValue().getClass()))
+    return beans.entrySet().stream()
+        .filter(entry -> beanType.isAssignableFrom(entry.getValue().getClass()))
         .collect(Collectors.toMap(Map.Entry::getKey, entry -> beanType.cast(entry.getValue())));
   }
 

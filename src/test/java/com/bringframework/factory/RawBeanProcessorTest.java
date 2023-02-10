@@ -2,12 +2,11 @@ package com.bringframework.factory;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.bringframework.registry.BeanDefinition;
 import com.bringframework.registry.BeanDefinitionRegistry;
+import com.bringframework.resolver.DependencyResolver;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,15 +20,17 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class RawBeanProcessorTest {
 
   @Mock
+  private DependencyResolver dependencyResolver;
+  @Mock
   private BeanDefinitionRegistry beanDefinitionRegistry;
 
   private RawBeanProcessor beanPostProcessor;
 
   private final Map<String, Object> rawBeanMap = new HashMap<>();
-
   @BeforeEach
   void setUp() {
-    beanPostProcessor = new RawBeanProcessor(beanDefinitionRegistry, rawBeanMap);
+    beanPostProcessor =
+        new RawBeanProcessor(beanDefinitionRegistry, rawBeanMap, dependencyResolver);
   }
 
   @Test

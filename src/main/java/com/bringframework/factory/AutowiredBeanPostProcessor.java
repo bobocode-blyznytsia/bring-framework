@@ -2,11 +2,11 @@ package com.bringframework.factory;
 
 import com.bringframework.exception.BeanInjectionException;
 import com.bringframework.registry.BeanDefinitionRegistry;
-import com.bringframework.resolver.DefaultDependencyResolver;
 import com.bringframework.resolver.DependencyResolver;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -16,16 +16,11 @@ import lombok.extern.slf4j.Slf4j;
  */
 
 @Slf4j
+@RequiredArgsConstructor
 public class AutowiredBeanPostProcessor implements BeanPostProcessor {
   private final BeanDefinitionRegistry definitionRegistry;
   private final Map<String, Object> rawBeans;
   private final DependencyResolver dependencyResolver;
-
-  public AutowiredBeanPostProcessor(BeanDefinitionRegistry registry, Map<String, Object> rawBeans) {
-    this.rawBeans = rawBeans;
-    this.definitionRegistry = registry;
-    this.dependencyResolver = new DefaultDependencyResolver(definitionRegistry);
-  }
 
   @Override
   public void process() {

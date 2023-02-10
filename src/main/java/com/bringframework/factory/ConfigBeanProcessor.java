@@ -5,50 +5,51 @@ import static com.bringframework.util.BeanUtils.createInstance;
 import com.bringframework.registry.BeanDefinition;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import com.bringframework.registry.ConfigBeanDefinition;
-import com.bringframework.resolver.DefaultDependencyResolver;
+import com.bringframework.resolver.DependencyResolver;
 import java.util.Arrays;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Creates instances of beans by provided {@link BeanDefinition}s from {@link BeanDefinitionRegistry}. RawBeanProcessor
- * is not responsible for injecting other beans, but {@link AutowiredBeanPostProcessor}.
+ * Implementation of {@link BeanProcessor} that is responsible for processing {@link BeanDefinition}s
+ * of beans from classes marked as {@link com.bringframework.annotation.Configuration}
+ * provided  from {@link BeanDefinitionRegistry}.
+ *
+ * <p>ConfigBeanProcessor is not responsible for injecting other beans, but {@link AutowiredBeanPostProcessor}.
+ *
+ * @since 1.0
  */
-
-//TODO Add and fix JavaDocs
 @Slf4j
-public class ConfigBeanProcessor {
-
-  private final Map<String, Object> rawBeanMap;
+@RequiredArgsConstructor
+public class ConfigBeanProcessor implements BeanProcessor {
 
   private final BeanDefinitionRegistry beanDefinitionRegistry;
+  private final Map<String, Object> rawBeanMap;
+  private final DependencyResolver dependencyResolver;
 
-  public ConfigBeanProcessor(BeanDefinitionRegistry beanDefinitionRegistry, Map<String, Object> rawBeanMap) {
-    this.beanDefinitionRegistry = beanDefinitionRegistry;
-    this.rawBeanMap = rawBeanMap;
-  }
-
-  //TODO Fix JavaDocs
+  /**
+   * {@inheritDoc}
+   */
   public void process() {
-    Map<String, ConfigBeanDefinition> configBeanDefinitionMap = beanDefinitionRegistry.getAllConfigBeanDefinitions();
-    log.debug("Started creating {} config beans without dependencies found in bean definition " + "registry.",
-        configBeanDefinitionMap.size());
-    for (Map.Entry<String, ConfigBeanDefinition> entry : configBeanDefinitionMap.entrySet()) {
-      initializeBeanRecursive(entry.getKey(), entry.getValue());
+    Map<String, ConfigBeanDefinition> configBeanDefinitionMap =
+        beanDefinitionRegistry.getAllConfigBeanDefinitions();
+    var beansNumber = configBeanDefinitionMap.size();
+    log.debug("creating {} row config beans found in bean definition registry", beansNumber);
 
-    }
-    log.debug("Finished creating config beans.");//todo add some information like count of created beans
+    configBeanDefinitionMap.forEach(this::initializeBeanRecursive);
+    log.debug("created {} config row beans", beansNumber);
   }
 
   private Object initializeBeanRecursive(String beanName, ConfigBeanDefinition beanDefinition) {
     var factoryMethod = beanDefinition.factoryMethod();
     var parameters = factoryMethod.getParameters();
 
-    DefaultDependencyResolver dependencyResolver = new DefaultDependencyResolver(beanDefinitionRegistry);
-
     Object[] candidatesBeans = Arrays.stream(parameters)
-        .map(parameter -> dependencyResolver.getCandidateNameOfType(parameter.getType(), parameter.getAnnotations()))
-        .map(this::getOrInitializeBean).toArray();
+        .map(parameter -> dependencyResolver.getCandidateNameOfType(parameter.getType(),
+            parameter.getAnnotations()))
+        .map(this::getOrInitializeBean)
+        .toArray();
 
     Object beanInstance = createInstance(factoryMethod, candidatesBeans);
     rawBeanMap.put(beanName, beanInstance);

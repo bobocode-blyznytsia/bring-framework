@@ -13,15 +13,17 @@ public class Configuration {
   public Reflections reflections() {
     return Reflections.collect();
   }
+
   @Bean
   public Reflections reflections2() {
     return Reflections.collect();
   }
 
   @Bean
-  org.reflections.Configuration configuration(@Qualifier("reflections")Reflections reflections) {
+  org.reflections.Configuration configuration(@Qualifier("reflections") Reflections reflections) {
     return reflections.getConfiguration();
   }
+
   @Bean
   org.reflections.Configuration configuration2(@Qualifier("reflections2") Reflections reflections) {
     return reflections.getConfiguration();
@@ -36,14 +38,16 @@ public class Configuration {
   public SomeClass someClass1() {
     return new SomeClass();
   }
+
   @Bean
   public SomeClass someClass2() {
     return new SomeClass();
   }
+
   @Bean
-  public SomeClass2 some(@Qualifier("someClass1")SomeClass someClass1,
-                         @Qualifier("someClass1")SomeClass someClass3,
-                         @Qualifier("someClass2")SomeClass someClass2) {
+  public SomeClass2 some(@Qualifier("someClass1") SomeClass someClass1,
+                         @Qualifier("someClass1") SomeClass someClass3,
+                         @Qualifier("someClass2") SomeClass someClass2) {
     return new SomeClass2(someClass1, someClass2, someClass3);
   }
 

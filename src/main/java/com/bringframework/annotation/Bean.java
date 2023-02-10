@@ -8,7 +8,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-//TODO Add documentation
+/**
+ * Annotation used to Indicate that a method produces a bean to be managed by the Bring container
+ */
 @Documented
 @Target({METHOD})
 @Retention(RetentionPolicy.RUNTIME)

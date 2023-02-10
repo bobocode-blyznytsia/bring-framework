@@ -2,14 +2,13 @@ package com.bringframework.util;
 
 import com.bringframework.exception.BeanInitializationException;
 import java.lang.reflect.Method;
+import lombok.experimental.UtilityClass;
 
 /**
  * Utility class for creating bean instance using reflection API.
  */
+@UtilityClass
 public final class BeanUtils {
-
-  private BeanUtils() {
-  }
 
   //TODO add JavaDoc
   public static <T> T createInstance(Class<T> beanType) {
