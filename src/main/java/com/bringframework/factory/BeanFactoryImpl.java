@@ -21,9 +21,13 @@ public class BeanFactoryImpl implements BeanFactory {
   public BeanFactoryImpl(BeanDefinitionRegistry beanDefinitionRegistry) {
     this.beanDefinitionRegistry = beanDefinitionRegistry;
     this.dependencyResolver = new DefaultDependencyResolver(this.beanDefinitionRegistry);
-    this.beanProcessors.add(new ConfigBeanProcessor(this.beanDefinitionRegistry, rawBeansMap, dependencyResolver));
-    this.beanProcessors.add(new RawBeanProcessor(this.beanDefinitionRegistry, rawBeansMap, dependencyResolver));
-    this.beanPostProcessors.add(new AutowiredBeanPostProcessor(beanDefinitionRegistry, rawBeansMap, dependencyResolver));
+    this.beanProcessors
+        .add(new ConfigBeanProcessor(this.beanDefinitionRegistry, rawBeansMap, dependencyResolver));
+    this.beanProcessors
+        .add(new RawBeanProcessor(this.beanDefinitionRegistry, rawBeansMap, dependencyResolver));
+    this.beanPostProcessors
+        .add(new AutowiredBeanPostProcessor(this.beanDefinitionRegistry, rawBeansMap,
+            dependencyResolver));
   }
 
   /**
