@@ -21,9 +21,11 @@ import lombok.extern.slf4j.Slf4j;
  *
  * <p>Provides basic bean dependency resolution capabilities.
  * Is not capable of resolving conflicts when multiple bean candidates are available
+ *
+ * <p>The main purpose of the class is to define the bean name of the candidate to be inserted based on beans available
+ * in the bean definitions map. If no candidate is found, a {@link NoSuchBeanException} is thrown. If multiple
+ * candidates for injection were found, a {@link NoUniqueBeanException} is thrown.
  */
-//TODO reread JavaDocs and fix
-
 @Slf4j
 public class DefaultDependencyResolver implements DependencyResolver {
 
@@ -35,16 +37,15 @@ public class DefaultDependencyResolver implements DependencyResolver {
     this.configBeanDefinition = definitionRegistry.getAllConfigBeanDefinitions();
   }
 
-  //TODO reread JavaDocs and fix
-
   /**
-   * Defines bean name of the candidate to be inserted based on beans available in beanDefinitions If no candidate found
-   * - {@link NoSuchBeanException} is thrown If multiple candidates for injection were found -
-   * {@link NoUniqueBeanException} is thrown
+   * Returns the name of the bean candidate to be inserted based on the available beans in the bean definitions.
    *
-   * @param candidateType desired type of the candidate
+   * <p>If no candidate is found, a {@link NoSuchBeanException} is thrown. If multiple candidates for injection are
+   * found, a {@link NoUniqueBeanException} is thrown.
+   *
+   * @param candidateType the desired type of the candidate
    * @param metadata      additional information that will be ignored by this implementation
-   * @return name of the bean to be used
+   * @return the name of the bean to be used
    */
   @Override
   public String getCandidateNameOfType(Class<?> candidateType, Annotation... metadata) {

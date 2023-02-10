@@ -8,7 +8,10 @@ import java.util.Arrays;
 import lombok.extern.slf4j.Slf4j;
 import org.reflections.Reflections;
 
-//TODO Add and fix JavaDocs
+/**
+ * The DefaultConfigBeanDefinitionScanner class is used to scan and register beans defined in classes annotated with the
+ * {@link Configuration} annotation.
+ */
 @Slf4j
 public class DefaultConfigBeanDefinitionScanner implements ConfigBeanDefinitionScanner {
   private final BeanDefinitionRegistry registry;
@@ -17,7 +20,14 @@ public class DefaultConfigBeanDefinitionScanner implements ConfigBeanDefinitionS
     this.registry = registry;
   }
 
-  //TODO Add and fix JavaDocs
+  /**
+   * Registers the config beans defined in the specified class path. The method scans the class path for classes
+   * annotated with the {@link Configuration} annotation. For each class found, the method scans its declared methods
+   * for those annotated with the {@link Bean} annotation. For each method found, the method creates a
+   * ConfigBeanDefinition and registers it in the {@link BeanDefinitionRegistry}.
+   *
+   * @param classPath the class path to be scanned.
+   */
   @Override
   public void registerConfigBeans(String classPath) {
     var reflections = new Reflections(classPath);
@@ -27,10 +37,9 @@ public class DefaultConfigBeanDefinitionScanner implements ConfigBeanDefinitionS
   }
 
   private void processConfigClass(Class<?> configClass) {
-    Arrays.stream(configClass.getDeclaredMethods())
-        .filter(method -> method.isAnnotationPresent(Bean.class))
-        .map(ConfigBeanDefinition::new)
-        .forEach(configBeanDefinition -> registry.registerConfigBeanDefinition(
-            configBeanDefinition.factoryMethod().getName(), configBeanDefinition));
+    Arrays.stream(configClass.getDeclaredMethods()).filter(method -> method.isAnnotationPresent(Bean.class))
+        .map(ConfigBeanDefinition::new).forEach(
+            configBeanDefinition -> registry.registerConfigBeanDefinition(
+                configBeanDefinition.factoryMethod().getName(), configBeanDefinition));
   }
 }
