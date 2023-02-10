@@ -15,6 +15,7 @@ public class ComponentSomeClass {
   @Autowired()
   @Qualifier("someClass2")
   private SomeClass someClass2;
+  
   public void someMethod() {
     someClass1.someMethod();
     someClass2.someMethod();

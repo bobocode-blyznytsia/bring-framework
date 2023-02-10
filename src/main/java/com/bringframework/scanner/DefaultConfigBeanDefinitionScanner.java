@@ -39,7 +39,7 @@ public class DefaultConfigBeanDefinitionScanner implements ConfigBeanDefinitionS
   private void processConfigClass(Class<?> configClass) {
     Arrays.stream(configClass.getDeclaredMethods()).filter(method -> method.isAnnotationPresent(Bean.class))
         .map(ConfigBeanDefinition::new).forEach(
-            configBeanDefinition -> registry.registerConfigBeanDefinition(configBeanDefinition.factoryMethod().getName(),
-                configBeanDefinition));
+            configBeanDefinition -> registry.registerConfigBeanDefinition(
+                configBeanDefinition.factoryMethod().getName(), configBeanDefinition));
   }
 }

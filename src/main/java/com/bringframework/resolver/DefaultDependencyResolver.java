@@ -21,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  * <p>Provides basic bean dependency resolution capabilities.
  * Is not capable of resolving conflicts when multiple bean candidates are available
+ *
  * <p>The main purpose of the class is to define the bean name of the candidate to be inserted based on beans available
  * in the bean definitions map. If no candidate is found, a {@link NoSuchBeanException} is thrown. If multiple
  * candidates for injection were found, a {@link NoUniqueBeanException} is thrown.
@@ -38,6 +39,7 @@ public class DefaultDependencyResolver implements DependencyResolver {
 
   /**
    * Returns the name of the bean candidate to be inserted based on the available beans in the bean definitions.
+   *
    * <p>If no candidate is found, a {@link NoSuchBeanException} is thrown. If multiple candidates for injection are
    * found, a {@link NoUniqueBeanException} is thrown.
    *

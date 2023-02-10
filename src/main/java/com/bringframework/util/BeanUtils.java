@@ -10,7 +10,8 @@ import java.lang.reflect.Method;
  * <p>It offers two main methods:</p>
  * <ul>
  * <li>{@link #createInstance(Class)} - creates an instance of the given bean type using its default constructor.</li>
- * <li>{@link #createInstance(Method, Object...)} - creates an instance of the given bean type using the provided factory method and its parameters.</li>
+ * <li>{@link #createInstance(Method, Object...)} - creates an instance of the given bean type using the provided
+ * factory method and its parameters.</li>
  * </ul>
  * <p>In addition, this class also provides a method for validating the package name that will be scanned for beans,
  * to ensure that the correct package name is specified.</p>
