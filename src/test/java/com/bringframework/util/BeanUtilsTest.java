@@ -3,7 +3,7 @@ package com.bringframework.util;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import com.bringframework.exceptions.BeanInitializationException;
+import com.bringframework.exception.BeanInitializationException;
 import java.util.AbstractList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -38,4 +38,13 @@ class BeanUtilsTest {
     assertEquals(actualException.getCause().getClass(), NoSuchMethodException.class);
   }
 
+  @Test
+  void shouldThrowExceptionWhenPackageNameIsNull() {
+    assertThrows(IllegalArgumentException.class, () -> BeanUtils.validatePackageName(null));
+  }
+
+  @Test
+  void shouldThrowExceptionWhenPackageNameIsEmpty() {
+    assertThrows(IllegalArgumentException.class, () -> BeanUtils.validatePackageName("   "));
+  }
 }
