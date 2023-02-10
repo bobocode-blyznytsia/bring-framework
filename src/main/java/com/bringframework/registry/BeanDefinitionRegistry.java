@@ -18,6 +18,9 @@ public interface BeanDefinitionRegistry {
    */
   void registerBeanDefinition(String name, BeanDefinition beanDefinition);
 
+  //TODO Add and fix JavaDocs
+  void registerConfigBeanDefinition(String name, ConfigBeanDefinition beanDefinition);
+
   /**
    * Retrieve the {@link BeanDefinition} for the given bean name.
    *
@@ -26,6 +29,9 @@ public interface BeanDefinitionRegistry {
    */
   BeanDefinition getBeanDefinition(String name);
 
+  //TODO Add and fix JavaDocs
+  ConfigBeanDefinition getConfigBeanDefinition(String name);
+
   /**
    * Retrieve all registered {@link BeanDefinition}s.
    *
@@ -33,4 +39,7 @@ public interface BeanDefinitionRegistry {
    *     {@link BeanDefinition} as value
    */
   Map<String, BeanDefinition> getAllBeanDefinitions();
+
+  //TODO Add and fix JavaDocs
+  Map<String, ConfigBeanDefinition> getAllConfigBeanDefinitions();
 }

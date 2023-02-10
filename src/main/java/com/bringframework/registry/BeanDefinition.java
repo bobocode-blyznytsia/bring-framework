@@ -2,20 +2,25 @@ package com.bringframework.registry;
 
 import java.lang.reflect.Field;
 import java.util.Map;
+import lombok.Builder;
 
 /**
- * Represents the definition of a bean that is managed by the Bring IoC container. It provides
- * methods for getting information about the bean class, as well as any autowired fields that the
- * bean may have.
+ * Implementation of {@link BeanDefinition}
+ * Represents the definition of a bean that is managed by the Bring IoC container.
  */
-public interface BeanDefinition {
+//TODO fix javadocs as it hasn't implemented interface yet
+@Builder
+public class BeanDefinition {
+
+  private Class<?> clazz;
+  private Map<String, Field> autowiredFieldsMetadata;
 
   /**
-   * Returns the class of the bean.
-   *
-   * @return the bean class
+   * {@inheritDoc}
    */
-  Class<?> getBeanClass();
+  public Class<?> getBeanClass() {
+    return this.clazz;
+  }
 
   /**
    * Returns a map of autowired fields and their respective metadata for the bean. The keys in
@@ -23,5 +28,7 @@ public interface BeanDefinition {
    *
    * @return a map of autowired fields and their metadata
    */
-  Map<String, Field> getAutowiredFieldsMetadata();
+  public Map<String, Field> getAutowiredFieldsMetadata() {
+    return this.autowiredFieldsMetadata;
+  }
 }

@@ -9,7 +9,6 @@ import static org.apache.commons.lang3.StringUtils.uncapitalize;
 import com.bringframework.annotations.Autowired;
 import com.bringframework.annotations.Component;
 import com.bringframework.registry.BeanDefinition;
-import com.bringframework.registry.BeanDefinitionImpl;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import java.lang.reflect.Field;
 import java.util.Arrays;
@@ -62,7 +61,7 @@ public class DefaultBeanDefinitionReader implements BeanDefinitionReader {
             .collect(toMap(Field::getName, identity()));
     log.debug("found {} autowired fields for bean {}", autowiredFieldsMap.size(),
         resolveBeanName(beanClass));
-    return BeanDefinitionImpl
+    return BeanDefinition
         .builder()
         .clazz(beanClass)
         .autowiredFieldsMetadata(autowiredFieldsMap)

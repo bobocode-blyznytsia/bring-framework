@@ -2,8 +2,12 @@ package com.bringframework.context;
 
 import com.bringframework.exceptions.NoSuchBeanException;
 import com.bringframework.exceptions.NoUniqueBeanException;
+import com.bringframework.factory.BeanFactory;
+import com.bringframework.factory.impl.BeanFactoryImpl;
 import com.bringframework.reader.BeanDefinitionReader;
+import com.bringframework.reader.ConfigBeanDefinitionReader;
 import com.bringframework.reader.DefaultBeanDefinitionReader;
+import com.bringframework.reader.DefaultConfigBeanDefinitionReader;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import com.bringframework.registry.DefaultBeanDefinitionRegistry;
 import java.util.Map;
@@ -24,10 +28,13 @@ public class AnnotationConfigApplicationContext implements ApplicationContext {
     BeanDefinitionRegistry beanDefinitionRegistry = new DefaultBeanDefinitionRegistry();
     BeanDefinitionReader beanDefinitionReader = new DefaultBeanDefinitionReader(
         beanDefinitionRegistry);
-    //ConfigBeanDefinitionReader configBeanDefinitionReader = new ConfigBeanDefinitionReaderImpl(
-    //  beanDefinitionRegistry);
-    //BeanFactory beanFactory = new BeanFactoryImpl(beanDefinitionRegistry);
-    //beans = beanFactory.createBeans();
+    ConfigBeanDefinitionReader configBeanDefinitionReader = new DefaultConfigBeanDefinitionReader(
+      beanDefinitionRegistry);
+    //TODO package name provided for demonstration purpose
+    beanDefinitionReader.registerBeans("com.bringframework");
+    configBeanDefinitionReader.registerConfigBeans("com.bringframework");
+    BeanFactory beanFactory = new BeanFactoryImpl(beanDefinitionRegistry);
+    beans = beanFactory.createBeans();
   }
 
   @Override
@@ -66,6 +73,12 @@ public class AnnotationConfigApplicationContext implements ApplicationContext {
     return beans.entrySet().stream()
         .filter(entry -> beanType.isAssignableFrom(entry.getValue().getClass()))
         .collect(Collectors.toMap(Map.Entry::getKey, entry -> beanType.cast(entry.getValue())));
+  }
+
+  //TODO Remove. Added for demonstration purpose
+  @Override
+  public Map<String, Object> getAllBeans() {
+    return beans;
   }
 
 }

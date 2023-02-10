@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 class DefaultBeanDefinitionRegistryTest {
   private DefaultBeanDefinitionRegistry beanDefinitionRegistry = new DefaultBeanDefinitionRegistry();
-  private BeanDefinition beanDefinition = new BeanDefinitionImpl(Object.class, Map.of());
+  private BeanDefinition beanDefinition = new BeanDefinition(Object.class, Map.of());
 
   @Test
   void testRegisterBeanDefinition() {

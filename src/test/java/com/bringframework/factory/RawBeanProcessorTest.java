@@ -7,7 +7,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.bringframework.registry.BeanDefinition;
-import com.bringframework.registry.BeanDefinitionImpl;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,9 +34,9 @@ class RawBeanProcessorTest {
 
   @Test
   void shouldProcessBeanDefinitions() {
-    BeanDefinition stringBeanDefinition = BeanDefinitionImpl.builder().clazz(String.class).build();
+    BeanDefinition stringBeanDefinition = BeanDefinition.builder().clazz(String.class).build();
     BeanDefinition arrayListBeanDefinition =
-        BeanDefinitionImpl.builder().clazz(ArrayList.class).build();
+        BeanDefinition.builder().clazz(ArrayList.class).build();
 
     Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
     beanDefinitionMap.put("stringBean", stringBeanDefinition);
