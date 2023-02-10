@@ -26,7 +26,7 @@ class AnnotationConfigApplicationContextTest {
 
     @BeforeEach
     void setUp() throws IllegalAccessException {
-        applicationContext = new AnnotationConfigApplicationContext();
+        applicationContext = new AnnotationConfigApplicationContext("testPackageName");
         initTestBeans();
         setTestBeansToBeanFiledAppContext();
     }

@@ -32,7 +32,7 @@ class DefaultBeanDefinitionScannerTest {
 
   @Test
   void shouldRegisterBeans() {
-    underTest.registerBeans("com.bringframework");
+    underTest.registerBeans("com.bringframework.scanner");
 
     verify(registry, times(1)).registerBeanDefinition(beanDefinitionNameArgumentCaptor.capture(),
         beanDefinitionArgumentCaptor.capture());

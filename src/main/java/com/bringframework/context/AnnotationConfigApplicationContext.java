@@ -1,33 +1,36 @@
 package com.bringframework.context;
 
+import static com.bringframework.util.BeanUtils.validatePackageName;
+
 import com.bringframework.exception.NoSuchBeanException;
 import com.bringframework.exception.NoUniqueBeanException;
+import com.bringframework.factory.BeanFactory;
+import com.bringframework.factory.impl.BeanFactoryImpl;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import com.bringframework.registry.DefaultBeanDefinitionRegistry;
-import com.bringframework.scanner.BeanDefinitionScanner;
 import com.bringframework.scanner.DefaultBeanDefinitionScanner;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Implementation of {@code ApplicationContext} that uses annotation configuration to search and
+ * Implementation of {@link ApplicationContext} that uses annotation configuration to search and
  * create beans.
  */
 @Slf4j
 public class AnnotationConfigApplicationContext implements ApplicationContext {
 
-  private Map<String, Object> beans;
+  private final Map<String, Object> beans;
 
-  public AnnotationConfigApplicationContext() {
+  public AnnotationConfigApplicationContext(String packageName) {
+    validatePackageName(packageName);
     log.trace("Application context is collecting...");
     BeanDefinitionRegistry beanDefinitionRegistry = new DefaultBeanDefinitionRegistry();
-    BeanDefinitionScanner beanDefinitionScanner = new DefaultBeanDefinitionScanner(
-        beanDefinitionRegistry);
+    new DefaultBeanDefinitionScanner(beanDefinitionRegistry).registerBeans(packageName);
     //ConfigBeanDefinitionReader configBeanDefinitionReader = new ConfigBeanDefinitionReaderImpl(
     //  beanDefinitionRegistry);
-    //BeanFactory beanFactory = new BeanFactoryImpl(beanDefinitionRegistry);
-    //beans = beanFactory.createBeans();
+    BeanFactory beanFactory = new BeanFactoryImpl(beanDefinitionRegistry);
+    this.beans = beanFactory.createBeans();
   }
 
   @Override
