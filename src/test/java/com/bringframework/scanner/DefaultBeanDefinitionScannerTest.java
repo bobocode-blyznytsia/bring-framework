@@ -1,4 +1,4 @@
-package com.bringframework.reader;
+package com.bringframework.scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -16,7 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class DefaultBeanDefinitionReaderTest {
+class DefaultBeanDefinitionScannerTest {
 
   @Mock
   private BeanDefinitionRegistry registry;
@@ -28,7 +28,7 @@ class DefaultBeanDefinitionReaderTest {
   private ArgumentCaptor<BeanDefinition> beanDefinitionArgumentCaptor;
 
   @InjectMocks
-  private DefaultBeanDefinitionReader underTest;
+  private DefaultBeanDefinitionScanner underTest;
 
   @Test
   void shouldRegisterBeans() {
