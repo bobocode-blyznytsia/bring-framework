@@ -1,10 +1,12 @@
 package com.bringframework.registry;
 
-import com.bringframework.exceptions.BeanDefinitionDuplicateNameException;
+import com.bringframework.exception.BeanDefinitionDuplicateNameException;
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.extern.slf4j.Slf4j;
+
+//TODO fix JavaDocs
 
 /**
  * Base implementation of {@link BeanDefinitionRegistry} used to store {@link BeanDefinition} and retrieve them. This
@@ -21,7 +23,7 @@ public class DefaultBeanDefinitionRegistry implements BeanDefinitionRegistry {
    */
   @Override
   public void registerBeanDefinition(String name, BeanDefinition beanDefinition) {
-    checkUniqueBeanName(name, beanDefinition.getBeanClass().getSimpleName());
+    checkUniqueBeanName(name);
     registry.put(name, beanDefinition);
     log.debug("A new BeanDefinition with name {} for class {} has been registered successfully", name,
         beanDefinition.getBeanClass().getSimpleName());
@@ -32,17 +34,15 @@ public class DefaultBeanDefinitionRegistry implements BeanDefinitionRegistry {
    */
   @Override
   public void registerConfigBeanDefinition(String name, ConfigBeanDefinition beanDefinition) {
-    checkUniqueBeanName(name, beanDefinition.factoryMethod().getReturnType().getSimpleName());
+    checkUniqueBeanName(name);
     configRegistry.put(name, beanDefinition);
     log.debug("A new BeanDefinition with name {} for class {} has been registered successfully", name,
         beanDefinition.factoryMethod().getReturnType().getSimpleName());
   }
 
-  private void checkUniqueBeanName(String name, String className) {
+  private void checkUniqueBeanName(String name) {
     if (registry.containsKey(name) || configRegistry.containsKey(name)) {
-      throw new BeanDefinitionDuplicateNameException(String.format(
-          "BeanDefinition with name %s already exists. Registry BeanDefinition class is %s and " +
-              "provided for creation is %s", name, registry.get(name).getBeanClass(), className));
+      throw new BeanDefinitionDuplicateNameException(name);
     }
   }
 

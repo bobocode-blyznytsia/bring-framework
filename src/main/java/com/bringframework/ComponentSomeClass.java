@@ -1,8 +1,8 @@
 package com.bringframework;
 
-import com.bringframework.annotations.Autowired;
-import com.bringframework.annotations.Component;
-import com.bringframework.annotations.Qualifier;
+import com.bringframework.annotation.Autowired;
+import com.bringframework.annotation.Component;
+import com.bringframework.annotation.Qualifier;
 
 //TODO Remove. Added for demonstration purpose
 @Component

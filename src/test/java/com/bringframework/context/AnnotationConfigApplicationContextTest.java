@@ -1,7 +1,7 @@
 package com.bringframework.context;
 
-import com.bringframework.exceptions.NoSuchBeanException;
-import com.bringframework.exceptions.NoUniqueBeanException;
+import com.bringframework.exception.NoSuchBeanException;
+import com.bringframework.exception.NoUniqueBeanException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +26,7 @@ class AnnotationConfigApplicationContextTest {
 
     @BeforeEach
     void setUp() throws IllegalAccessException {
-        applicationContext = new AnnotationConfigApplicationContext();
+        applicationContext = new AnnotationConfigApplicationContext("testPackageName");
         initTestBeans();
         setTestBeansToBeanFiledAppContext();
     }

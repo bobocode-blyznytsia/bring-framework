@@ -1,4 +1,4 @@
-package com.bringframework.annotations;
+package com.bringframework.annotation;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;

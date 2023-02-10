@@ -2,19 +2,12 @@ package com.bringframework.factory;
 
 import static com.bringframework.util.BeanUtils.createInstance;
 
-import com.bringframework.annotations.Qualifier;
 import com.bringframework.registry.BeanDefinition;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import com.bringframework.registry.ConfigBeanDefinition;
 import com.bringframework.resolver.DefaultDependencyResolver;
-import java.lang.reflect.Parameter;
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Queue;
-import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -40,7 +33,7 @@ public class ConfigBeanProcessor {
     Map<String, ConfigBeanDefinition> configBeanDefinitionMap = beanDefinitionRegistry.getAllConfigBeanDefinitions();
     log.debug("Started creating {} config beans without dependencies found in bean definition " + "registry.",
         configBeanDefinitionMap.size());
-    for (Map.Entry<String, ConfigBeanDefinition> entry: configBeanDefinitionMap.entrySet()) {
+    for (Map.Entry<String, ConfigBeanDefinition> entry : configBeanDefinitionMap.entrySet()) {
       initializeBeanRecursive(entry.getKey(), entry.getValue());
 
     }

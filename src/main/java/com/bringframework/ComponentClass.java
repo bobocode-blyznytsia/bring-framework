@@ -1,7 +1,7 @@
 package com.bringframework;
 
-import com.bringframework.annotations.Autowired;
-import com.bringframework.annotations.Component;
+import com.bringframework.annotation.Autowired;
+import com.bringframework.annotation.Component;
 import java.util.Random;
 
 //TODO Remove. Added for demonstration purpose

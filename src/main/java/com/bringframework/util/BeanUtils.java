@@ -1,6 +1,6 @@
 package com.bringframework.util;
 
-import com.bringframework.exceptions.BeanInitializationException;
+import com.bringframework.exception.BeanInitializationException;
 import java.lang.reflect.Method;
 
 /**

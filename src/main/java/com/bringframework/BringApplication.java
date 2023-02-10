@@ -1,5 +1,7 @@
 package com.bringframework;
 
+import static com.bringframework.util.BeanUtils.validatePackageName;
+
 import com.bringframework.context.AnnotationConfigApplicationContext;
 import com.bringframework.context.ApplicationContext;
 import lombok.extern.slf4j.Slf4j;
@@ -10,35 +12,17 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class BringApplication {
 
+  private final String packageName;
   private ApplicationContext applicationContext;
 
-  public BringApplication() {
-  }
-
-  /**
-   * Runs Bring Application and creates {@code ApplicationContext}.
-   */
-  public void run() {
-    log.info("Starting Bring application...");
-    applicationContext = createApplicationContext();
-  }
-
-  private ApplicationContext createApplicationContext() {
-    return new AnnotationConfigApplicationContext();
-  }
-
-  /**
-   * Returns created before application context.
-   *
-   * @return created application context
-   */
-  public ApplicationContext getApplicationContext() {
-    return applicationContext;
+  public BringApplication(String packageName) {
+    validatePackageName(packageName);
+    this.packageName = packageName;
   }
 
   //TODO Remove. Added for demonstration purpose
   public static void main(String[] args) {
-    BringApplication bringApplication = new BringApplication();
+    BringApplication bringApplication = new BringApplication("com.bringframework");
     bringApplication.run();
     ApplicationContext applicationContext1 = bringApplication.getApplicationContext();
 
@@ -61,6 +45,27 @@ public class BringApplication {
     System.out.println("==================================================");
     ComponentSomeClass componentSomeClass = applicationContext1.getBean(ComponentSomeClass.class);
     componentSomeClass.someMethod();
+  }
+
+  /**
+   * Runs Bring Application and creates {@link ApplicationContext}.
+   *
+   * @return created application context
+   */
+  public ApplicationContext run() {
+    log.info("Starting Bring application...");
+    this.applicationContext = new AnnotationConfigApplicationContext(packageName);
+    log.info("Bring application was started successfully.");
+    return applicationContext;
+  }
+
+  /**
+   * Returns created before application context.
+   *
+   * @return created application context
+   */
+  public ApplicationContext getApplicationContext() {
+    return applicationContext;
   }
 
 }

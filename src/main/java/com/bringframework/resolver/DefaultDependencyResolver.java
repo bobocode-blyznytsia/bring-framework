@@ -1,8 +1,8 @@
 package com.bringframework.resolver;
 
-import com.bringframework.annotations.Qualifier;
-import com.bringframework.exceptions.NoSuchBeanException;
-import com.bringframework.exceptions.NoUniqueBeanException;
+import com.bringframework.annotation.Qualifier;
+import com.bringframework.exception.NoSuchBeanException;
+import com.bringframework.exception.NoUniqueBeanException;
 import com.bringframework.registry.BeanDefinition;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import com.bringframework.registry.ConfigBeanDefinition;
@@ -36,6 +36,7 @@ public class DefaultDependencyResolver implements DependencyResolver {
   }
 
   //TODO reread JavaDocs and fix
+
   /**
    * Defines bean name of the candidate to be inserted based on beans available in beanDefinitions If no candidate found
    * - {@link NoSuchBeanException} is thrown If multiple candidates for injection were found -
@@ -62,7 +63,7 @@ public class DefaultDependencyResolver implements DependencyResolver {
         configBeanDefinition.entrySet().stream().filter(validateConfigBean)).map(Map.Entry::getKey).toList();
 
     if (candidateNames.isEmpty()) {
-      throw new NoSuchBeanException("No bean of type " + candidateType + " found");
+      throw new NoSuchBeanException(candidateType);
     }
     if (candidateNames.size() > 1) {
       throw new NoUniqueBeanException(candidateType);
@@ -79,13 +80,11 @@ public class DefaultDependencyResolver implements DependencyResolver {
     if (isConfigBean || isRegularBean) {
       return candidateName;
     }
-    throw new NoSuchBeanException("No bean of type " + candidateType + " found");
+    throw new NoSuchBeanException(candidateType);
   }
 
   private Optional<String> getQualifierValueOptional(Annotation... metadata) {
-    return Arrays.stream(metadata)
-        .filter(Qualifier.class::isInstance)
-        .findFirst()
+    return Arrays.stream(metadata).filter(Qualifier.class::isInstance).findFirst()
         .map(annotation -> ((Qualifier) annotation).value());
   }
 

@@ -1,7 +1,7 @@
-package com.bringframework.reader;
+package com.bringframework.scanner;
 
-import com.bringframework.annotations.Bean;
-import com.bringframework.annotations.Configuration;
+import com.bringframework.annotation.Bean;
+import com.bringframework.annotation.Configuration;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import com.bringframework.registry.ConfigBeanDefinition;
 import java.util.Arrays;
@@ -10,10 +10,10 @@ import org.reflections.Reflections;
 
 //TODO Add and fix JavaDocs
 @Slf4j
-public class DefaultConfigBeanDefinitionReader implements ConfigBeanDefinitionReader {
+public class DefaultConfigBeanDefinitionScanner implements ConfigBeanDefinitionScanner {
   private final BeanDefinitionRegistry registry;
 
-  public DefaultConfigBeanDefinitionReader(BeanDefinitionRegistry registry) {
+  public DefaultConfigBeanDefinitionScanner(BeanDefinitionRegistry registry) {
     this.registry = registry;
   }
 

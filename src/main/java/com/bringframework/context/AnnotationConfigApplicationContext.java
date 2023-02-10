@@ -1,40 +1,35 @@
 package com.bringframework.context;
 
-import com.bringframework.exceptions.NoSuchBeanException;
-import com.bringframework.exceptions.NoUniqueBeanException;
+import static com.bringframework.util.BeanUtils.validatePackageName;
+
+import com.bringframework.exception.NoSuchBeanException;
+import com.bringframework.exception.NoUniqueBeanException;
 import com.bringframework.factory.BeanFactory;
 import com.bringframework.factory.impl.BeanFactoryImpl;
-import com.bringframework.reader.BeanDefinitionReader;
-import com.bringframework.reader.ConfigBeanDefinitionReader;
-import com.bringframework.reader.DefaultBeanDefinitionReader;
-import com.bringframework.reader.DefaultConfigBeanDefinitionReader;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import com.bringframework.registry.DefaultBeanDefinitionRegistry;
+import com.bringframework.scanner.DefaultBeanDefinitionScanner;
+import com.bringframework.scanner.DefaultConfigBeanDefinitionScanner;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Implementation of {@code ApplicationContext} that uses annotation configuration to search and
- * create beans.
+ * Implementation of {@link ApplicationContext} that uses annotation configuration to search and create beans.
  */
 @Slf4j
 public class AnnotationConfigApplicationContext implements ApplicationContext {
 
-  private Map<String, Object> beans;
+  private final Map<String, Object> beans;
 
-  public AnnotationConfigApplicationContext() {
+  public AnnotationConfigApplicationContext(String packageName) {
+    validatePackageName(packageName);
     log.trace("Application context is collecting...");
     BeanDefinitionRegistry beanDefinitionRegistry = new DefaultBeanDefinitionRegistry();
-    BeanDefinitionReader beanDefinitionReader = new DefaultBeanDefinitionReader(
-        beanDefinitionRegistry);
-    ConfigBeanDefinitionReader configBeanDefinitionReader = new DefaultConfigBeanDefinitionReader(
-      beanDefinitionRegistry);
-    //TODO package name provided for demonstration purpose
-    beanDefinitionReader.registerBeans("com.bringframework");
-    configBeanDefinitionReader.registerConfigBeans("com.bringframework");
+    new DefaultBeanDefinitionScanner(beanDefinitionRegistry).registerBeans(packageName);
+    new DefaultConfigBeanDefinitionScanner(beanDefinitionRegistry).registerConfigBeans(packageName);
     BeanFactory beanFactory = new BeanFactoryImpl(beanDefinitionRegistry);
-    beans = beanFactory.createBeans();
+    this.beans = beanFactory.createBeans();
   }
 
   @Override
@@ -43,11 +38,8 @@ public class AnnotationConfigApplicationContext implements ApplicationContext {
     if (beansOfSpecifiedType.size() > 1) {
       throw new NoUniqueBeanException(beanType);
     }
-    T foundBean = beansOfSpecifiedType.values().stream()
-        .findFirst()
-        .orElseThrow(() -> new NoSuchBeanException(String.format(
-            "Bean with type %s does not exist!",
-            beanType.getSimpleName())));
+    T foundBean =
+        beansOfSpecifiedType.values().stream().findFirst().orElseThrow(() -> new NoSuchBeanException(beanType));
     log.trace("Retrieved bean with type {}", beanType.getSimpleName());
     return foundBean;
   }
@@ -57,11 +49,7 @@ public class AnnotationConfigApplicationContext implements ApplicationContext {
     Map<String, T> beansOfSpecifiedType = getAllBeans(beanType);
     T foundBean = beansOfSpecifiedType.get(name);
     if (foundBean == null) {
-      throw new NoSuchBeanException(String.format(
-          "Bean with name %s, and type %s does not exist!",
-          name,
-          beanType.getSimpleName())
-      );
+      throw new NoSuchBeanException(name, beanType);
     }
     log.trace("Retrieved bean with name {} and type {}", name, beanType.getSimpleName());
     return foundBean;
@@ -70,8 +58,7 @@ public class AnnotationConfigApplicationContext implements ApplicationContext {
   @Override
   public <T> Map<String, T> getAllBeans(Class<T> beanType) {
     log.trace("Retrieved all beans with type {}", beanType.getSimpleName());
-    return beans.entrySet().stream()
-        .filter(entry -> beanType.isAssignableFrom(entry.getValue().getClass()))
+    return beans.entrySet().stream().filter(entry -> beanType.isAssignableFrom(entry.getValue().getClass()))
         .collect(Collectors.toMap(Map.Entry::getKey, entry -> beanType.cast(entry.getValue())));
   }
 

@@ -1,12 +1,12 @@
 package com.bringframework;
 
-import com.bringframework.annotations.Bean;
-import com.bringframework.annotations.Qualifier;
+import com.bringframework.annotation.Bean;
+import com.bringframework.annotation.Qualifier;
 import java.util.Random;
 import org.reflections.Reflections;
 
 //TODO Remove. Added for demonstration purpose
-@com.bringframework.annotations.Configuration
+@com.bringframework.annotation.Configuration
 public class Configuration {
 
   @Bean
