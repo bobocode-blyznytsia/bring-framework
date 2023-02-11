@@ -53,7 +53,7 @@ public interface BeanDefinitionRegistry {
    * Checks if bean registry contains beanDefinition for provided bean name
    *
    * @param beanName bean name
-   * @return yes if contains and false otherwise
+   * @return true if contains and false otherwise
    */
   boolean contains(String beanName);
 

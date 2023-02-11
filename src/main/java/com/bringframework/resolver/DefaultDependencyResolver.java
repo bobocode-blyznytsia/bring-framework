@@ -97,8 +97,10 @@ public class DefaultDependencyResolver implements DependencyResolver {
 
   private Optional<String> getQualifierValue(Annotation... metadata) {
     return Arrays.stream(metadata)
-        .filter(Qualifier.class::isInstance).findFirst()
-        .map(annotation -> ((Qualifier) annotation).value());
+        .filter(Qualifier.class::isInstance)
+        .findFirst()
+        .map(Qualifier.class::cast)
+        .map(Qualifier::value);
   }
 
 }
