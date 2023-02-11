@@ -24,7 +24,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  * <p>The main purpose of the class is to define the bean name of the candidate to be inserted based on beans available
  * in the bean definitions map. If no candidate is found, a {@link NoSuchBeanException} is thrown. If multiple
- * candidates for injection were found, a {@link NoUniqueBeanException} is thrown.
+ * candidates for injection are found, a {@link NoUniqueBeanException} is thrown.
  */
 @Slf4j
 public class DefaultDependencyResolver implements DependencyResolver {
