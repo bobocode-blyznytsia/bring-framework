@@ -9,7 +9,6 @@ public class BeanInitializationException extends BringException {
       "Couldn't initialize bean with type=%s. Reason: %s";
 
   public BeanInitializationException(Class<?> beanType, Throwable cause) {
-    super(BEAN_INITIALIZATION_EXCEPTION_DEFAULT_MESSAGE.formatted(beanType, cause.getMessage()),
-        cause);
+    super(BEAN_INITIALIZATION_EXCEPTION_DEFAULT_MESSAGE.formatted(beanType, cause.getMessage()), cause);
   }
 }

@@ -5,10 +5,11 @@ import static com.bringframework.util.BeanUtils.validatePackageName;
 import com.bringframework.exception.NoSuchBeanException;
 import com.bringframework.exception.NoUniqueBeanException;
 import com.bringframework.factory.BeanFactory;
-import com.bringframework.factory.impl.BeanFactoryImpl;
+import com.bringframework.factory.BeanFactoryImpl;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import com.bringframework.registry.DefaultBeanDefinitionRegistry;
 import com.bringframework.scanner.DefaultBeanDefinitionScanner;
+import com.bringframework.scanner.DefaultConfigBeanDefinitionScanner;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +28,7 @@ public class AnnotationConfigApplicationContext implements ApplicationContext {
     log.trace("Application context is collecting...");
     BeanDefinitionRegistry beanDefinitionRegistry = new DefaultBeanDefinitionRegistry();
     new DefaultBeanDefinitionScanner(beanDefinitionRegistry).registerBeans(packageName);
-    //ConfigBeanDefinitionReader configBeanDefinitionReader = new ConfigBeanDefinitionReaderImpl(
-    //  beanDefinitionRegistry);
+    new DefaultConfigBeanDefinitionScanner(beanDefinitionRegistry).registerConfigBeans(packageName);
     BeanFactory beanFactory = new BeanFactoryImpl(beanDefinitionRegistry);
     this.beans = beanFactory.createBeans();
   }
@@ -39,7 +39,7 @@ public class AnnotationConfigApplicationContext implements ApplicationContext {
     if (beansOfSpecifiedType.size() > 1) {
       throw new NoUniqueBeanException(beanType);
     }
-    T foundBean = beansOfSpecifiedType.values().stream()
+    var foundBean = beansOfSpecifiedType.values().stream()
         .findFirst()
         .orElseThrow(() -> new NoSuchBeanException(beanType));
     log.trace("Retrieved bean with type {}", beanType.getSimpleName());
@@ -49,7 +49,7 @@ public class AnnotationConfigApplicationContext implements ApplicationContext {
   @Override
   public <T> T getBean(String name, Class<T> beanType) {
     Map<String, T> beansOfSpecifiedType = getAllBeans(beanType);
-    T foundBean = beansOfSpecifiedType.get(name);
+    var foundBean = beansOfSpecifiedType.get(name);
     if (foundBean == null) {
       throw new NoSuchBeanException(name, beanType);
     }

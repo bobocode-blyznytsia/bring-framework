@@ -39,4 +39,5 @@ public interface ApplicationContext {
    * @return a map of all beans of the specified type, with the bean names as keys
    */
   <T> Map<String, T> getAllBeans(Class<T> beanType);
+
 }

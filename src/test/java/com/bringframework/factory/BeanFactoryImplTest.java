@@ -4,9 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
-import com.bringframework.factory.impl.BeanFactoryImpl;
 import com.bringframework.registry.BeanDefinition;
-import com.bringframework.registry.BeanDefinitionImpl;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,14 +27,13 @@ class BeanFactoryImplTest {
   @Test
   void shouldProcessBeanDefinitions() {
     //given
-    BeanDefinition stringBeanDefinition = BeanDefinitionImpl.builder()
+    BeanDefinition stringBeanDefinition = BeanDefinition.builder()
         .clazz(String.class)
         .autowiredFieldsMetadata(Collections.emptyMap())
         .build();
     Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
     beanDefinitionMap.put("str", stringBeanDefinition);
     when(beanDefinitionRegistry.getAllBeanDefinitions()).thenReturn(beanDefinitionMap);
-    when(beanDefinitionRegistry.getBeanDefinition("str")).thenReturn(stringBeanDefinition);
 
     //when
     Map<String, Object> readyBeans = beanFactory.createBeans();
