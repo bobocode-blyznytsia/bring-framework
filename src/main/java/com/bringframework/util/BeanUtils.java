@@ -1,6 +1,7 @@
 package com.bringframework.util;
 
 import com.bringframework.exception.BeanInitializationException;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import lombok.experimental.UtilityClass;
 
@@ -30,7 +31,9 @@ public final class BeanUtils {
    */
   public static <T> T createInstance(Class<T> beanType) {
     try {
-      return beanType.getConstructor().newInstance();
+      Constructor<T> constructor = beanType.getConstructor();
+      constructor.setAccessible(true);
+      return constructor.newInstance();
     } catch (Throwable e) {
       throw new BeanInitializationException(beanType, e);
     }
