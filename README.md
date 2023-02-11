@@ -176,3 +176,4 @@ public class AppConfig {
 ## Limitations
 - Configuration beans can be injected into another configuration beans or into component beans
 - The injection of component bean into configuration is not supported
+- Framework does not support circular dependency detection on configuration beans
