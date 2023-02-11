@@ -4,8 +4,8 @@ import static com.bringframework.util.BeanUtils.createInstance;
 
 import com.bringframework.registry.BeanDefinition;
 import com.bringframework.registry.BeanDefinitionRegistry;
-import com.bringframework.resolver.DependencyResolver;
 import java.util.Map;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -17,19 +17,11 @@ import lombok.extern.slf4j.Slf4j;
  * @since 1.0
  */
 @Slf4j
+@RequiredArgsConstructor
 public class RawBeanProcessor implements BeanProcessor {
 
   private final Map<String, Object> rawBeanMap;
   private final BeanDefinitionRegistry beanDefinitionRegistry;
-  private final DependencyResolver dependencyResolver;
-
-  public RawBeanProcessor(BeanDefinitionRegistry beanDefinitionRegistry,
-                          Map<String, Object> rawBeanMap,
-                          DependencyResolver dependencyResolver) {
-    this.beanDefinitionRegistry = beanDefinitionRegistry;
-    this.rawBeanMap = rawBeanMap;
-    this.dependencyResolver = dependencyResolver;
-  }
 
   /**
    * {@inheritDoc}

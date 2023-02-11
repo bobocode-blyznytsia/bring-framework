@@ -30,11 +30,11 @@ import lombok.extern.slf4j.Slf4j;
 public class DefaultDependencyResolver implements DependencyResolver {
 
   private final Map<String, BeanDefinition> beanDefinitions;
-  private final Map<String, ConfigBeanDefinition> configBeanDefinition;
+  private final Map<String, ConfigBeanDefinition> configBeanDefinitions;
 
   public DefaultDependencyResolver(BeanDefinitionRegistry definitionRegistry) {
     this.beanDefinitions = definitionRegistry.getAllBeanDefinitions();
-    this.configBeanDefinition = definitionRegistry.getAllConfigBeanDefinitions();
+    this.configBeanDefinitions = definitionRegistry.getAllConfigBeanDefinitions();
   }
 
   /**
@@ -63,7 +63,7 @@ public class DefaultDependencyResolver implements DependencyResolver {
 
     List<String> candidateNames = Stream.concat(
             beanDefinitions.entrySet().stream().filter(validateRegularBean),
-            configBeanDefinition.entrySet().stream().filter(validateConfigBean)
+            configBeanDefinitions.entrySet().stream().filter(validateConfigBean)
         )
         .map(Map.Entry::getKey)
         .toList();
@@ -84,7 +84,7 @@ public class DefaultDependencyResolver implements DependencyResolver {
             .map(candidateType::isAssignableFrom)
             .orElse(false);
     Boolean isConfigBean =
-        Optional.ofNullable(configBeanDefinition.get(candidateName))
+        Optional.ofNullable(configBeanDefinitions.get(candidateName))
             .map(ConfigBeanDefinition::factoryMethod)
             .map(Method::getReturnType)
             .map(candidateType::isAssignableFrom)

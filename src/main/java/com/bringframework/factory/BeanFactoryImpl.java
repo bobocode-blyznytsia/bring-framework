@@ -24,7 +24,7 @@ public class BeanFactoryImpl implements BeanFactory {
     this.beanProcessors
         .add(new ConfigBeanProcessor(this.beanDefinitionRegistry, rawBeansMap, dependencyResolver));
     this.beanProcessors
-        .add(new RawBeanProcessor(this.beanDefinitionRegistry, rawBeansMap, dependencyResolver));
+        .add(new RawBeanProcessor(rawBeansMap, this.beanDefinitionRegistry));
     this.beanPostProcessors
         .add(new AutowiredBeanPostProcessor(this.beanDefinitionRegistry, rawBeansMap,
             dependencyResolver));
