@@ -6,9 +6,9 @@ import lombok.Builder;
 
 
 /**
- * Represents the definition of a bean that is managed by the Bring IoC container and created by
- * {@link com.bringframework.annotation.Component} annotation. It provides methods for getting information about the
- * bean class, as well as any autowired fields that the bean may have.
+ * Represents the definition of a bean that is managed by the Bring IoC container.
+ * It provides methods for getting information about the bean class,
+ * as well as any autowired fields that the bean may have.
  */
 @Builder
 public class BeanDefinition {
