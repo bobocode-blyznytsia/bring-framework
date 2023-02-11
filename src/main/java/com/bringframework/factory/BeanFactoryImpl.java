@@ -13,20 +13,18 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class BeanFactoryImpl implements BeanFactory {
   private final Map<String, Object> rawBeansMap = new ConcurrentHashMap<>();
-  private final BeanDefinitionRegistry beanDefinitionRegistry;
-  private final DependencyResolver dependencyResolver;
   private final List<BeanProcessor> beanProcessors = new ArrayList<>();
   private final List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 
   public BeanFactoryImpl(BeanDefinitionRegistry beanDefinitionRegistry) {
-    this.beanDefinitionRegistry = beanDefinitionRegistry;
-    this.dependencyResolver = new DefaultDependencyResolver(this.beanDefinitionRegistry);
+    DependencyResolver dependencyResolver =
+        new DefaultDependencyResolver(beanDefinitionRegistry);
     this.beanProcessors
-        .add(new ConfigBeanProcessor(this.beanDefinitionRegistry, rawBeansMap, dependencyResolver));
+        .add(new ConfigBeanProcessor(beanDefinitionRegistry, rawBeansMap, dependencyResolver));
     this.beanProcessors
-        .add(new RawBeanProcessor(rawBeansMap, this.beanDefinitionRegistry));
+        .add(new RawBeanProcessor(rawBeansMap, beanDefinitionRegistry));
     this.beanPostProcessors
-        .add(new AutowiredBeanPostProcessor(this.beanDefinitionRegistry, rawBeansMap,
+        .add(new AutowiredBeanPostProcessor(beanDefinitionRegistry, rawBeansMap,
             dependencyResolver));
   }
 
