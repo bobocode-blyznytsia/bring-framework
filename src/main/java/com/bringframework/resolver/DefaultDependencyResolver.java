@@ -61,10 +61,12 @@ public class DefaultDependencyResolver implements DependencyResolver {
     Predicate<Map.Entry<String, ConfigBeanDefinition>> validateConfigBean =
         entry -> candidateType.isAssignableFrom(entry.getValue().factoryMethod().getReturnType());
 
-    List<String> candidateNames =
-        Stream.concat(beanDefinitions.entrySet().stream().filter(validateRegularBean),
-                configBeanDefinition.entrySet().stream().filter(validateConfigBean))
-            .map(Map.Entry::getKey).toList();
+    List<String> candidateNames = Stream.concat(
+            beanDefinitions.entrySet().stream().filter(validateRegularBean),
+            configBeanDefinition.entrySet().stream().filter(validateConfigBean)
+        )
+        .map(Map.Entry::getKey)
+        .toList();
 
     if (candidateNames.isEmpty()) {
       throw new NoSuchBeanException(candidateType);
@@ -95,7 +97,8 @@ public class DefaultDependencyResolver implements DependencyResolver {
 
   private Optional<String> getQualifierValueOptional(Annotation... metadata) {
     return Arrays.stream(metadata)
-        .filter(Qualifier.class::isInstance).findFirst()
+        .filter(Qualifier.class::isInstance)
+        .findFirst()
         .map(annotation -> ((Qualifier) annotation).value());
   }
 
