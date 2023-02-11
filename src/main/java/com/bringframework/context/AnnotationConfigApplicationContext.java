@@ -39,7 +39,7 @@ public class AnnotationConfigApplicationContext implements ApplicationContext {
     if (beansOfSpecifiedType.size() > 1) {
       throw new NoUniqueBeanException(beanType);
     }
-    T foundBean = beansOfSpecifiedType.values().stream()
+    var foundBean = beansOfSpecifiedType.values().stream()
         .findFirst()
         .orElseThrow(() -> new NoSuchBeanException(beanType));
     log.trace("Retrieved bean with type {}", beanType.getSimpleName());
@@ -49,7 +49,7 @@ public class AnnotationConfigApplicationContext implements ApplicationContext {
   @Override
   public <T> T getBean(String name, Class<T> beanType) {
     Map<String, T> beansOfSpecifiedType = getAllBeans(beanType);
-    T foundBean = beansOfSpecifiedType.get(name);
+    var foundBean = beansOfSpecifiedType.get(name);
     if (foundBean == null) {
       throw new NoSuchBeanException(name, beanType);
     }
@@ -63,12 +63,6 @@ public class AnnotationConfigApplicationContext implements ApplicationContext {
     return beans.entrySet().stream()
         .filter(entry -> beanType.isAssignableFrom(entry.getValue().getClass()))
         .collect(Collectors.toMap(Map.Entry::getKey, entry -> beanType.cast(entry.getValue())));
-  }
-
-  //TODO Remove. Added for demonstration purpose
-  @Override
-  public Map<String, Object> getAllBeans() {
-    return beans;
   }
 
 }
