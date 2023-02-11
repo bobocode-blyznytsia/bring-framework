@@ -2,7 +2,6 @@ package com.bringframework.factory;
 
 import static com.bringframework.util.BeanUtils.createInstance;
 
-import com.bringframework.registry.BeanDefinition;
 import com.bringframework.registry.BeanDefinitionRegistry;
 import com.bringframework.registry.ConfigBeanDefinition;
 import com.bringframework.resolver.DependencyResolver;
@@ -12,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * Implementation of {@link BeanProcessor} that is responsible for processing {@link BeanDefinition}s
+ * Implementation of {@link BeanProcessor} that is responsible for processing {@link ConfigBeanDefinition}s
  * of beans from classes marked as {@link com.bringframework.annotation.Configuration}
  * provided  from {@link BeanDefinitionRegistry}.
  *
@@ -34,14 +33,14 @@ public class ConfigBeanProcessor implements BeanProcessor {
   public void process() {
     Map<String, ConfigBeanDefinition> configBeanDefinitionMap =
         beanDefinitionRegistry.getAllConfigBeanDefinitions();
-    var beansNumber = configBeanDefinitionMap.size();
-    log.debug("creating {} row config beans found in bean definition registry", beansNumber);
+    var beansSize = configBeanDefinitionMap.size();
+    log.debug("creating {} row config beans found in bean definition registry", beansSize);
 
-    configBeanDefinitionMap.forEach(this::initializeBeanRecursive);
-    log.debug("created {} config row beans", beansNumber);
+    configBeanDefinitionMap.forEach(this::initializeBeanRecursively);
+    log.debug("created {} config row beans", beansSize);
   }
 
-  private Object initializeBeanRecursive(String beanName, ConfigBeanDefinition beanDefinition) {
+  private Object initializeBeanRecursively(String beanName, ConfigBeanDefinition beanDefinition) {
     var factoryMethod = beanDefinition.factoryMethod();
     var parameters = factoryMethod.getParameters();
 
@@ -61,6 +60,6 @@ public class ConfigBeanProcessor implements BeanProcessor {
     if (rawBeanMap.containsKey(name)) {
       return rawBeanMap.get(name);
     }
-    return initializeBeanRecursive(name, beanDefinitionRegistry.getConfigBeanDefinition(name));
+    return initializeBeanRecursively(name, beanDefinitionRegistry.getConfigBeanDefinition(name));
   }
 }

@@ -37,10 +37,10 @@ public class RawBeanProcessor implements BeanProcessor {
   public void process() {
     Map<String, BeanDefinition> beanDefinitions =
         this.beanDefinitionRegistry.getAllBeanDefinitions();
-    var size = beanDefinitions.size();
-    log.debug("Creating {} beans without dependencies found in bean definition registry", size);
+    var beansSize = beanDefinitions.size();
+    log.debug("Creating {} beans without dependencies found in bean definition registry", beansSize);
     beanDefinitions.forEach(this::initializeBean);
-    log.debug("Finished creating {} beans", size);
+    log.debug("Finished creating {} beans", beansSize);
   }
 
   private void initializeBean(String beanName, BeanDefinition beanDefinition) {

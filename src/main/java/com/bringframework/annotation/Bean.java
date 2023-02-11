@@ -9,7 +9,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation used to Indicate that a method produces a bean to be managed by the Bring container
+ * Annotation used to indicate that a method produces a bean to be managed by the Bring container
  */
 @Documented
 @Target({METHOD})

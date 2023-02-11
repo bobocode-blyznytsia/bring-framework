@@ -50,6 +50,14 @@ public interface BeanDefinitionRegistry {
   Map<String, BeanDefinition> getAllBeanDefinitions();
 
   /**
+   * Checks if bean registry contains beanDefinition for provided bean name
+   *
+   * @param beanName bean name
+   * @return yes if contains and false otherwise
+   */
+  boolean contains(String beanName);
+
+  /**
    * Retrieve all registered {@link ConfigBeanDefinition}s.
    *
    * @return a map of all registered config bean definitions, with bean name as key and {@link ConfigBeanDefinition} as

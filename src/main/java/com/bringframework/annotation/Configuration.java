@@ -9,7 +9,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * Indicates that a class declares one or more @Bean methods and may be processed by the Bring
+ * Indicates that a class declares one or more {@link Bean} methods and may be processed by the Bring
  * container to generate bean definitions and service requests for those beans at runtime
  *
  * <p>See the {@link AnnotationConfigApplicationContext} javadocs for further details

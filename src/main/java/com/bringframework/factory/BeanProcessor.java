@@ -4,7 +4,7 @@ import com.bringframework.registry.BeanDefinition;
 import com.bringframework.registry.BeanDefinitionRegistry;
 
 /**
- * Class is used as super type of bean processors.
+ * Interface is used as super type of bean processors.
  * See also: {@link RawBeanProcessor} and {@link ConfigBeanProcessor}
  *
  * @since 1.0

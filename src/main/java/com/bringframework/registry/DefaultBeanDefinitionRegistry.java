@@ -67,6 +67,15 @@ public class DefaultBeanDefinitionRegistry implements BeanDefinitionRegistry {
   /**
    * {@inheritDoc}
    *
+   */
+  @Override
+  public boolean contains(String beanName) {
+    return registry.containsKey(beanName);
+  }
+
+  /**
+   * {@inheritDoc}
+   *
    * <p>Returns a defensive copy of all the config bean definitions stored in the registry.
    */
   @Override

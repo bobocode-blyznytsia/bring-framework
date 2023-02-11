@@ -30,7 +30,7 @@ public class AutowiredBeanPostProcessor implements BeanPostProcessor {
   }
 
   private void processBean(String beanName, Object bean) {
-    if (definitionRegistry.getAllBeanDefinitions().containsKey(beanName)) {
+    if (definitionRegistry.contains(beanName)) {
       var beanDefinition = definitionRegistry.getBeanDefinition(beanName);
       log.debug("Injecting autowired field dependencies for bean {}", beanName);
       beanDefinition.getAutowiredFieldsMetadata().values().forEach(field -> populateField(field, bean));
@@ -38,7 +38,7 @@ public class AutowiredBeanPostProcessor implements BeanPostProcessor {
   }
 
   private void populateField(Field field, Object targetBean) {
-    var candidate = getCandidateOfField(field);
+    var candidate = getCandidateByField(field);
     try {
       log.debug("Injecting bean of class {} into field {}", targetBean, field);
       field.setAccessible(true);
@@ -49,7 +49,7 @@ public class AutowiredBeanPostProcessor implements BeanPostProcessor {
     }
   }
 
-  private Object getCandidateOfField(Field field) {
+  private Object getCandidateByField(Field field) {
     Class<?> candidateClass = field.getType();
     Annotation[] metadata = field.getAnnotations();
     return rawBeans.get(dependencyResolver.getCandidateNameOfType(candidateClass, metadata));
