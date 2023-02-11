@@ -37,15 +37,15 @@ public class DefaultBeanDefinitionScanner implements BeanDefinitionScanner {
   public void registerBeans(String packageName) {
     var reflections = new Reflections(packageName);
     var beanClasses = reflections.getTypesAnnotatedWith(Component.class);
-    log.debug("found {} classes annotated with @Component", beanClasses.size());
-    beanClasses.parallelStream().forEach(this::registerBean);
+    log.debug("Found {} classes annotated with @Component", beanClasses.size());
+    beanClasses.forEach(this::registerBean);
   }
 
   private void registerBean(Class<?> beanClass) {
     var beanName = resolveBeanName(beanClass);
     var beanDefinition = createBeanDefinition(beanClass);
     registry.registerBeanDefinition(beanName, beanDefinition);
-    log.debug("bean {} registered in beanDefinitionRegistry", beanName);
+    log.debug("Bean {} registered in beanDefinitionRegistry", beanName);
   }
 
   private String resolveBeanName(Class<?> beanClass) {
@@ -59,7 +59,7 @@ public class DefaultBeanDefinitionScanner implements BeanDefinitionScanner {
         Arrays.stream(declaredFields)
             .filter(field -> nonNull(field.getAnnotation(Autowired.class)))
             .collect(toMap(Field::getName, identity()));
-    log.debug("found {} autowired fields for bean {}", autowiredFieldsMap.size(),
+    log.debug("Found {} autowired fields for bean {}", autowiredFieldsMap.size(),
         resolveBeanName(beanClass));
     return BeanDefinition
         .builder()

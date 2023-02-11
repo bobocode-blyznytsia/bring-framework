@@ -50,12 +50,12 @@ public class DefaultDependencyResolver implements DependencyResolver {
   @Override
   public String getCandidateNameOfType(Class<?> candidateType, Annotation... metadata) {
     log.debug("Resolving a candidate of type {}", candidateType.getSimpleName());
-    return getQualifierValueOptional(metadata)
-        .map(name -> findAndValidateCandidateName(name, candidateType))
-        .orElseGet(() -> findCandidateByType(candidateType));
+    return getQualifierValue(metadata)
+        .map(name -> resolveCandidateNameByType(name, candidateType))
+        .orElseGet(() -> findAndValidateCandidateByType(candidateType));
   }
 
-  private String findCandidateByType(Class<?> candidateType) {
+  private String findAndValidateCandidateByType(Class<?> candidateType) {
     Predicate<Map.Entry<String, BeanDefinition>> validateRegularBean =
         entry -> candidateType.isAssignableFrom(entry.getValue().getBeanClass());
     Predicate<Map.Entry<String, ConfigBeanDefinition>> validateConfigBean =
@@ -77,7 +77,7 @@ public class DefaultDependencyResolver implements DependencyResolver {
     return candidateNames.get(0);
   }
 
-  private String findAndValidateCandidateName(String candidateName, Class<?> candidateType) {
+  private String resolveCandidateNameByType(String candidateName, Class<?> candidateType) {
     Boolean isRegularBean =
         Optional.ofNullable(beanDefinitions.get(candidateName))
             .map(BeanDefinition::getBeanClass)
@@ -95,7 +95,7 @@ public class DefaultDependencyResolver implements DependencyResolver {
     throw new NoSuchBeanException(candidateType);
   }
 
-  private Optional<String> getQualifierValueOptional(Annotation... metadata) {
+  private Optional<String> getQualifierValue(Annotation... metadata) {
     return Arrays.stream(metadata)
         .filter(Qualifier.class::isInstance)
         .findFirst()

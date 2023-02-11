@@ -33,13 +33,14 @@ public class DefaultConfigBeanDefinitionScanner implements ConfigBeanDefinitionS
     var reflections = new Reflections(classPath);
     var configClasses = reflections.getTypesAnnotatedWith(Configuration.class);
     log.debug("found {} classes annotated with @Configuration", configClasses.size());
-    configClasses.parallelStream().forEach(this::processConfigClass);
+    configClasses.forEach(this::registerBean);
   }
 
-  private void processConfigClass(Class<?> configClass) {
-    Arrays.stream(configClass.getDeclaredMethods()).filter(method -> method.isAnnotationPresent(Bean.class))
-        .map(ConfigBeanDefinition::new).forEach(
-            configBeanDefinition -> registry.registerConfigBeanDefinition(
-                configBeanDefinition.factoryMethod().getName(), configBeanDefinition));
+  private void registerBean(Class<?> configClass) {
+    Arrays.stream(configClass.getDeclaredMethods())
+        .filter(method -> method.isAnnotationPresent(Bean.class))
+        .map(ConfigBeanDefinition::new)
+        .forEach(configBeanDefinition -> registry.registerConfigBeanDefinition(
+            configBeanDefinition.factoryMethod().getName(), configBeanDefinition));
   }
 }
