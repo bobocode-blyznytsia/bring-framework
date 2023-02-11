@@ -41,7 +41,7 @@ class AnnotationConfigApplicationContextTest {
     void shouldThrowNoSuchBeanExceptionWhenThereIsNoBeanWithSpecifiedType() {
         NoSuchBeanException actualException =
                 assertThrows(NoSuchBeanException.class, () -> applicationContext.getBean(Boolean.class));
-        assertEquals("Bean with type Boolean does not exist!", actualException.getMessage());
+        assertEquals("Bean with type Boolean does not exist", actualException.getMessage());
     }
 
     @Test
@@ -64,7 +64,7 @@ class AnnotationConfigApplicationContextTest {
         NoSuchBeanException actualException =
                 assertThrows(NoSuchBeanException.class,
                         () -> applicationContext.getBean("beanFromAnotherPlanet", Integer.class));
-        assertEquals("Bean with name beanFromAnotherPlanet, and type Integer does not exist!",
+        assertEquals("Bean with name beanFromAnotherPlanet, and type Integer does not exist",
                 actualException.getMessage());
     }
 
