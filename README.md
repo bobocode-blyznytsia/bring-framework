@@ -62,6 +62,7 @@ mvn clean package
 There are 2 ways to start with **Bring Framework**
 - Go over basic usage instruction
 - Clone the <a href="https://github.com/bobocode-blyznytsia/bring-framework-demo" target="_blank"/>bring-framework-demo</a> project and check what is provided by Bring Framework
+
 Choose what is more suitable for you.
 
 ### Basic usage
