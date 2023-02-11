@@ -40,6 +40,4 @@ public interface ApplicationContext {
    */
   <T> Map<String, T> getAllBeans(Class<T> beanType);
 
-  //TODO Remove. Added for demonstration purpose
-  Map<String, Object> getAllBeans();
 }
