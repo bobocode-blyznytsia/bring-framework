@@ -34,7 +34,6 @@ class BeanFactoryImplTest {
     Map<String, BeanDefinition> beanDefinitionMap = new HashMap<>();
     beanDefinitionMap.put("str", stringBeanDefinition);
     when(beanDefinitionRegistry.getAllBeanDefinitions()).thenReturn(beanDefinitionMap);
-    when(beanDefinitionRegistry.getBeanDefinition("str")).thenReturn(stringBeanDefinition);
 
     //when
     Map<String, Object> readyBeans = beanFactory.createBeans();
