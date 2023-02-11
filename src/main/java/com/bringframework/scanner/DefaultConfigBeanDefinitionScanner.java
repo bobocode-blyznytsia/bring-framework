@@ -32,7 +32,7 @@ public class DefaultConfigBeanDefinitionScanner implements ConfigBeanDefinitionS
   public void registerConfigBeans(String classPath) {
     var reflections = new Reflections(classPath);
     var configClasses = reflections.getTypesAnnotatedWith(Configuration.class);
-    log.debug("found {} classes annotated with @Configuration", configClasses.size());
+    log.debug("Found {} classes annotated with @Configuration", configClasses.size());
     configClasses.forEach(this::registerBean);
   }
 
