@@ -7,7 +7,7 @@
 ## Main features
 - Configuration
     - Beans are configured by annotations
-    - Configuration bean definition scannng
+    - Configuration bean definition scaning
     - Bean definition scanning
 - Context
     - Automatic bean creation
@@ -66,7 +66,7 @@ There are 2 ways to start with **Bring Framework**
 Choose what is more suitable for you.
 
 ### Basic usage
-To start new application with **Bring Framework**, you should create the instance of **`BringApplication` class frist**. It accepts the **`packageName`**, which will be scanned for bean components. You can use `public static void main(String[] args)` method for that.
+To start new application with **Bring Framework**, you should create the instance of **`BringApplication` class first**. It accepts the **`packageName`**, which will be scanned for bean components. You can use `public static void main(String[] args)` method for that.
 
 
 `BringApplication` has public method **`run()` which starts the specified package scanning and context initialization**. It returns the `ApplicationContext`.
