@@ -2,6 +2,7 @@ package com.bringframework.factory;
 
 import static java.util.Collections.emptyMap;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -38,7 +39,7 @@ class AutowiredBeanPostProcessorTest {
     Field testClassAField = TestClassB.class.getDeclaredField(TEST_CLASS_A_FIELD_NAME);
     when(secondBeanDefinition.getAutowiredFieldsMetadata())
         .thenReturn(Map.of(TEST_CLASS_A_FIELD_NAME, testClassAField));
-
+    when(beanDefinitionRegistry.contains(any())).thenReturn(true);
     when(beanDefinitionRegistry.getBeanDefinition(TEST_CLASS_A_BEAN_NAME)).thenReturn(firstBeanDefinition);
     when(beanDefinitionRegistry.getBeanDefinition(TEST_CLASS_B_BEAN_NAME)).thenReturn(secondBeanDefinition);
 
@@ -51,7 +52,6 @@ class AutowiredBeanPostProcessorTest {
         TEST_CLASS_B_BEAN_NAME, secondBeanDefinition
     );
 
-    when(beanDefinitionRegistry.getAllBeanDefinitions()).thenReturn(beanDefinitionMap);
     when(dependencyResolver.getCandidateNameOfType(TestClassA.class)).thenReturn(TEST_CLASS_A_BEAN_NAME);
 
     new AutowiredBeanPostProcessor(beanDefinitionRegistry, rawBeans,dependencyResolver).process();
