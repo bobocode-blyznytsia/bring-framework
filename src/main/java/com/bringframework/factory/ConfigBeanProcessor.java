@@ -34,10 +34,10 @@ public class ConfigBeanProcessor implements BeanProcessor {
     Map<String, ConfigBeanDefinition> configBeanDefinitionMap =
         beanDefinitionRegistry.getAllConfigBeanDefinitions();
     var beansSize = configBeanDefinitionMap.size();
-    log.debug("Creating {} row config beans found in bean definition registry", beansSize);
+    log.debug("Creating {} raw config beans found in bean definition registry", beansSize);
 
     configBeanDefinitionMap.forEach(this::initializeBeanRecursively);
-    log.debug("Created {} config row beans", beansSize);
+    log.debug("Created {} config raw beans", beansSize);
   }
 
   private Object initializeBeanRecursively(String beanName, ConfigBeanDefinition beanDefinition) {
