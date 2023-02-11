@@ -15,16 +15,16 @@
     - Method parameter injection *(configuration beans)*
 
 ## Provided annotations
-| Annotation      | Target              | Description   |
-| :-------------  |:--------------------| :-------------|
-| `@Autowired`    | FIELD               |*Marks a field as to be autowired by Bring's dependency injection facilities*|
-| `@Component`    | TYPE                |*Used to mark a class as a bean that can be managed by an IoC container*|
-| `@Configuration`| TYPE                |*Indicates that a class declares one or more `@Bean` methods and may be processed by the Bring container*|
-| `@Bean`         | TYPE                |*Used to indicate that a method produces a bean to be managed by the Bring container*|
-| `@Qualifier`    | FIELD, PARAMETER    |*May be used on a field or parameter as a qualifier for candidate beans when autowiring*|
+| Annotation      | Target                  | Description   |
+| :-------------  |:------------------------| :-------------|
+| `@Autowired`    | `FIELD`                 |*Marks a field as to be autowired by Bring's dependency injection facilities*|
+| `@Component`    | `TYPE`                  |*Used to mark a class as a bean that can be managed by an IoC container*|
+| `@Configuration`| `TYPE`                  |*Indicates that a class declares one or more `@Bean` methods and may be processed by the Bring container*|
+| `@Bean`         | `TYPE`                  |*Used to indicate that a method produces a bean to be managed by the Bring container*|
+| `@Qualifier`    | `FIELD`, `PARAMETER`    |*May be used on a field or parameter as a qualifier for candidate beans when autowiring*|
 
 ## Get started
-### Configure you environment
+### Configure your environment
 You should setup such tools:
 - [Git](https://git-scm.com/)
 - [JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
@@ -86,7 +86,7 @@ Let's start from `@Component` for simple case.
 @Component
 public class WeekDayComponent {
     public String getWeekDay() {
-        return LocalDateTime.now().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
+        return LocalDate.now().getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.ENGLISH);
     }
 }
 ```
@@ -96,29 +96,34 @@ To **inject dependency** into your component you can use `@Autowired` annotation
 @Component
 public class HelloComponent {
     @Autowired
-    private GreetingComponent greetingComponent;
+    private WeekDayComponent weekDayComponent;
     
     public void sayHello() {
-        System.out.println("Hello, today is " + greetingComponent.getWeekDay());
+        System.out.println("Hello, today is " + weekDayComponent.getWeekDay());
     }
 }
 ```
 
 The `ApplicationContext` has api to retreive any bean from the context. For example you can use method `<T> T getBean(Class<T> beanType)`:
 ```java
+public class Application {
  public static void main(String[] args) {
-        BringApplication bringApplication = new BringApplication("com.bobocode.bring.demo.app");
+        BringApplication bringApplication = new BringApplication(Application.class.getPackageName());
         ApplicationContext context = bringApplication.run();
         HelloComponent helloComponent = context.getBean(HelloComponent.class);
         helloComponent.sayHello();
  }
+}
 ```
-The application should write into the log message with current weekday.
+The application should write into the log message with current weekday. For example:
+```shell
+Hello, today is Saturday
+```
 
-🏆 **Congratulations!!! You have started your first applicaton on Bring Framework***
+🏆 **Congratulations!!! You have started your first applicaton on Bring Framework**
 
-### Configuration 
-The Bring Framework provides ability to create and inject beans of external dependencies. You can use `@Configuration` annotation for your configuration class, and `@Bean` annotation on method.
+### Configuration class
+The Bring Framework provides ability to create and inject beans of external dependencies. You can use `@Configuration` annotation for your configuration class, and `@Bean` annotation on method. It can be multiple configuration classes.
 
 ```java
 @Configuration
@@ -167,7 +172,6 @@ public class AppConfig {
     }
 }
 ```
-
 
 ## Limitations
 - Configuration beans can be injected into another configuration beans or into component beans
