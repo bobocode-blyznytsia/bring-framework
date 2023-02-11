@@ -45,6 +45,7 @@ public final class BeanUtils {
    * @return The created instance of the given bean type.
    * @throws BeanInitializationException If an exception occurs during the instance creation.
    */
+  @SuppressWarnings("unchecked")
   public static <T> T createInstance(Method factoryMethod, Object... parameterCandidates) {
     try {
       factoryMethod.setAccessible(true);
